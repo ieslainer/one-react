@@ -1,0 +1,5 @@
+# Common folders
+.vscode
+node_modules
+
+# App folders
