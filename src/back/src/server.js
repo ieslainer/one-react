@@ -2,6 +2,7 @@ var config = require('../config/config.json');
 var path = require('path');
 var express = require('express');
 var exphbs = require('express-handlebars');
+var bodyParser = require('body-parser');
 //var handlebars = require('handlebars');
 
 console.log("Config >> ", config);
@@ -40,6 +41,11 @@ Server.prototype = {
 		this.app.use('/contents', express.static('./build/contents'));
 		this.app.use('/partials', express.static('./build/partials'));
 		this.app.use('/public', express.static('./src/client/public'));
+		
+		// configure app to use bodyParser()
+		// this will let us get the data from a POST
+		this.app.use(bodyParser.urlencoded({ extended: true }));
+		this.app.use(bodyParser.json());
 
 	},
 	map : function(a, route){

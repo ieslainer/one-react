@@ -81,3 +81,76 @@ html:not(.android) ::-webkit-scrollbar-thumb {
     overflow: hidden;
     position: relative;
 }
+
+.row {
+    margin-left: -5px;
+    margin-right: -5px;
+}
+
+.summary-container{
+  background: #fff;
+  color: #7f8282;
+  font-size: 16px;
+  margin: 16px 0px 0px 0px;
+  overflow: hidden;
+  border-radius: 3px;
+}
+
+.summary-container header{
+  margin: 16px 16px 0px 16px;
+  border-bottom: 1px solid #a7a9aa;
+
+
+}
+
+.summary-container ul {
+    list-style: none;
+    font-size: 16px;
+    padding: 0px;
+}
+
+.summary-container ul li {
+    margin-bottom: 4px;
+}
+
+.summary-container header ul.title li:first-of-type {
+    font-size: 20.8px;
+    color: #4c4e50;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.summary-container section {
+    margin: 16px;
+}
+
+.summary-container section .studentListLink {
+    font-weight: bold;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.summary-container .drkBld{
+  color: #4c4e50;
+  font-weight: bold;
+}
+
+.summary-container ul.end {
+    text-align: right;
+    font-size: 14.4px;
+    margin-bottom: 0px;
+}
+
+.lozenge {
+    display: inline-block;
+    background: rgba(76, 78, 80, 0.8);
+    padding: 0 16px;
+    margin: 0;
+    border-radius: 17px;
+    height: 34px;
+    line-height: 34px;
+    color: #FFF;
+    font-size: 14.4px;
+}
