@@ -6,10 +6,7 @@ var APP_DIR = path.resolve(__dirname, 'src/client/app');
 
 var config = {
   context: APP_DIR,
-  entry: {
-    app: './index.jsx',
-    summary: './summary.jsx'
-  },
+  entry: ['./index.jsx', './summary.jsx'],
   output: {
     path: BUILD_DIR,
     filename: 'bundle.js'

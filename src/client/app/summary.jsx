@@ -1,23 +1,56 @@
 import React from 'react';
 import {render} from 'react-dom';
 
-class Summary extends React.Component {
+export class Summary extends React.Component {
+  
+  constructor() {
+      super();
+      this.state = {
+        title: null,
+        header:{},
+        refId : null      
+      };
+  }
+  
+  componentWillReceiveProps(newProps) {
+    this.setState({refId: newProps.refId});
+    
+  }
+  
+  componentWillUpdate(nextProps, nextState){
+    if(nextProps != nextState){
+      this.updateData();
+    }
+  }
 
-  componentWillMount(){
-    fetch('http://localhost:3002/assessment/idppp')
-    .then((response) => {
-      console.log("res: " + response);
-    });
+  updateData(){
+    if(this.state.refId != null){
+      console.log("call : " + this.state.refId);
+      fetch('http://localhost:3002/assessment/' + this.state.refId)
+      .then((response) => {
+          return response.json()
+      })
+      .then((response) => {
+        console.log("res: " + response);
+        let { headerInformation } = response; 
+        
+         this.setState({ title: headerInformation.assessment, header: headerInformation.headers[0] });       
+        
+      });
+    }
   }
 
   render () {
+  
+    if(!this.state.refId || !this.state.title){return <div></div>};
+  
     return (
       <div className="summary-container ">
         <header>
           <div className="row">
             <div className="col-xs-9">
             <ul className="title">
-                <li>Summary Report: Online Pretest: Unit 1</li>
+                <li>Summary Report: {this.state.title} ({this.state.refId})</li>
                 <li></li>
               </ul>
             </div>
@@ -32,32 +65,32 @@ class Summary extends React.Component {
           <div className="row">
             <div className="col-xs-5">
               <ul>
-                <li>Class: <span className="drkBld">All Classes</span></li>
-                <li>Teacher: <span className="drkBld">All Teachers</span></li>
-                <li>Grade: <span className="drkBld">ALL</span></li>
+                <li>Class: <span className="drkBld">{this.state.header.classRefId || 'All Classes' }</span></li>
+                <li>Teacher: <span className="drkBld">{this.state.header.teacherGivenName || 'All Teachers' }</span></li>
+                <li>Grade: <span className="drkBld"> {this.state.header.grade} </span></li>
               </ul>
             </div>
             <div className="col-xs-4">
               <ul>
-                <li>School: <span className="drkBld">All Schools</span></li>
-                <li>District: <span className="drkBld">Gilmartin Test District</span></li>
+                <li>School: <span className="drkBld">{this.state.header.schoolRefId || 'All Schools' }</span></li>
+                <li>District: <span className="drkBld">{this.state.header.districtName}</span></li>
               </ul>
             </div>
             <div className="col-xs-3 end">
               <ul>
                 <li>Not Started:
                   <p className="lozenge studentListLink">
-                    <strong>69</strong>
+                    <strong>0</strong>
                   </p>
                 </li>
                 <li>In Progress: 
                   <p className="lozenge studentListLink">
-                    <strong>13</strong>
+                    <strong>0</strong>
                   </p>
                 </li>
                 <li>Completed:
                   <p className="lozenge studentListLink">
-                    <strong>24</strong>
+                    <strong>0</strong>
                   </p>
                 </li>
               </ul>
@@ -68,5 +101,5 @@ class Summary extends React.Component {
     );
   }
 }
-
-render(<Summary/>, document.getElementById('summary'));
+// export default Summary;
+//render(<Summary/>, document.getElementById('summary'));
