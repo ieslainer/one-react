@@ -18,7 +18,7 @@ export class Summary extends React.Component {
   }
   
   componentWillUpdate(nextProps, nextState){
-    if(nextProps != nextState){
+    if(nextPros != nextState){
       this.updateData();
     }
   }
