@@ -12,32 +12,59 @@ export class Summary extends React.Component {
       };
   }
   
+  componentWillMount(){
+    console.log("componentWillMount");
+  }
+  
+  componentDidMount(){
+    console.log("componentDidMount");
+  }
+  
   componentWillReceiveProps(newProps) {
-    this.setState({refId: newProps.refId});
-    
+    console.log("componentWillReceiveProps");
+    console.log("need update view :" + (this.state.refId != newProps.refId));
+    if(this.state.refId != newProps.refId){
+      this.setState({refId: newProps.refId});
+      this.updateData(newProps.refId);
+    }  
+  }
+  
+  shouldComponentUpdate(nextProps, nextState){
+    console.log("shouldComponentUpdate");
+//    console.log("nextProps", nextProps);
+//    console.log("nextState", nextState);
+    return true;
   }
   
   componentWillUpdate(nextProps, nextState){
-    if(nextPros != nextState){
-      this.updateData();
+    console.log("componentWillUpdate");
+//    console.log("nextProps", nextProps);
+//    console.log("nextState", nextState);
+    if(nextProps.refId != nextState.refId){
+//      this.updateData();
     }
   }
+  
+  
+  
+  componentDidUpdate(){
+    console.log("componentDidUpdate");
+  }
 
-  updateData(){
-    if(this.state.refId != null){
-      console.log("call : " + this.state.refId);
-      fetch('http://localhost:3002/assessment/' + this.state.refId)
-      .then((response) => {
-          return response.json()
-      })
-      .then((response) => {
-        console.log("res: " + response);
-        let { headerInformation } = response; 
-        
-         this.setState({ title: headerInformation.assessment, header: headerInformation.headers[0] });       
-        
-      });
-    }
+  updateData(refId){
+    console.log("updateData ("+refId+")");
+    fetch('http://localhost:3002/assessment/' + refId)
+    .then((response) => {
+        return response.json()
+    })
+    .then((response) => {
+      console.log("res: " + response);
+      let { headerInformation } = response; 
+      
+       this.setState({ title: headerInformation.assessment, header: headerInformation.headers[0] });       
+      
+    });
+    
   }
 
   render () {

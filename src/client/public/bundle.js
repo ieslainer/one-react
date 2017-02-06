@@ -44888,34 +44888,63 @@
 	  }
 
 	  _createClass(Summary, [{
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
+	      console.log("componentWillMount");
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      console.log("componentDidMount");
+	    }
+	  }, {
 	    key: 'componentWillReceiveProps',
 	    value: function componentWillReceiveProps(newProps) {
-	      this.setState({ refId: newProps.refId });
+	      console.log("componentWillReceiveProps");
+	      console.log("need update view :" + (this.state.refId != newProps.refId));
+	      if (this.state.refId != newProps.refId) {
+	        this.setState({ refId: newProps.refId });
+	        this.updateData(newProps.refId);
+	      }
+	    }
+	  }, {
+	    key: 'shouldComponentUpdate',
+	    value: function shouldComponentUpdate(nextProps, nextState) {
+	      console.log("shouldComponentUpdate");
+	      //    console.log("nextProps", nextProps);
+	      //    console.log("nextState", nextState);
+	      return true;
 	    }
 	  }, {
 	    key: 'componentWillUpdate',
 	    value: function componentWillUpdate(nextProps, nextState) {
-	      if (nextPros != nextState) {
-	        this.updateData();
+	      console.log("componentWillUpdate");
+	      //    console.log("nextProps", nextProps);
+	      //    console.log("nextState", nextState);
+	      if (nextProps.refId != nextState.refId) {
+	        //      this.updateData();
 	      }
 	    }
 	  }, {
+	    key: 'componentDidUpdate',
+	    value: function componentDidUpdate() {
+	      console.log("componentDidUpdate");
+	    }
+	  }, {
 	    key: 'updateData',
-	    value: function updateData() {
+	    value: function updateData(refId) {
 	      var _this2 = this;
 
-	      if (this.state.refId != null) {
-	        console.log("call : " + this.state.refId);
-	        fetch('http://localhost:3002/assessment/' + this.state.refId).then(function (response) {
-	          return response.json();
-	        }).then(function (response) {
-	          console.log("res: " + response);
-	          var headerInformation = response.headerInformation;
+	      console.log("updateData (" + refId + ")");
+	      fetch('http://localhost:3002/assessment/' + refId).then(function (response) {
+	        return response.json();
+	      }).then(function (response) {
+	        console.log("res: " + response);
+	        var headerInformation = response.headerInformation;
 
 
-	          _this2.setState({ title: headerInformation.assessment, header: headerInformation.headers[0] });
-	        });
-	      }
+	        _this2.setState({ title: headerInformation.assessment, header: headerInformation.headers[0] });
+	      });
 	    }
 	  }, {
 	    key: 'render',

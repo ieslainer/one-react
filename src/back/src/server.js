@@ -1,5 +1,6 @@
 var config = require('../config/config.json');
 var path = require('path');
+var cors = require('cors');
 var express = require('express');
 var exphbs = require('express-handlebars');
 var bodyParser = require('body-parser');
@@ -46,6 +47,9 @@ Server.prototype = {
 		// this will let us get the data from a POST
 		this.app.use(bodyParser.urlencoded({ extended: true }));
 		this.app.use(bodyParser.json());
+		
+		// use it before all route definitions
+		this.app.use(cors({origin: 'http://local.one.react.com:9696'}));
 
 	},
 	map : function(a, route){
