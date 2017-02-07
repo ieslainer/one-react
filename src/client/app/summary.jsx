@@ -4,6 +4,7 @@ import {render} from 'react-dom';
 export class Summary extends React.Component {
   
   constructor() {
+      console.log("Component Summary");
       super();
       this.state = {
         title: null,

@@ -55,6 +55,24 @@ html:not(.android) ::-webkit-scrollbar-thumb {
   scrollbar-darkshadow-Color: #f1f2f3;
 }
 
+.clearfix:before,
+.clearfix:after
+  content: " ";
+  display: table;
+}
+
+.clearfix:after{
+  clear: both;
+}
+
+.pull-left {
+  float: left !important;
+}
+
+.label-figure {
+  display: block;
+}
+
 .container{
   width: 100%;
   height: 100%;
@@ -154,3 +172,43 @@ html:not(.android) ::-webkit-scrollbar-thumb {
     color: #FFF;
     font-size: 14.4px;
 }
+
+.summary-columns {
+  clear: both;
+  width: 100%;
+}
+
+.summary-columns > div:first-child {
+  float: left;
+  width: calc(70% - 48px);
+}
+
+.summary-columns .summary-container {
+  margin: 32px 0px 32px 0px;
+}
+
+.performance header h1 {
+    font-weight: normal;
+    font-size: 20.8px;
+    margin: 5;
+    width: 100%;
+    height: 100%;
+    text-transform: uppercase;
+}
+
+.performance .performance-average h4 {
+  margin-bottom: 16px;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.performance .performance-average .label-figure {
+  width: 100%;
+  color: #7f8282;
+  float: left;
+  font-size: 16px;
+  margin-bottom: 32px;
+  margin-right: 32px;
+}
+
+
