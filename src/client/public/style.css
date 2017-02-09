@@ -180,7 +180,7 @@ html:not(.android) ::-webkit-scrollbar-thumb {
 
 .summary-columns > div:first-child {
   float: left;
-  width: calc(70% - 48px);
+  width: calc(80% - 48px);
 }
 
 .summary-columns .summary-container {
@@ -211,4 +211,109 @@ html:not(.android) ::-webkit-scrollbar-thumb {
   margin-right: 32px;
 }
 
+.one-graph {    
+    margin-top: 8px;
+    float: left;
+    position: relative;
+    display: block;
+}
+.summary-breakdown{
+  padding-left: 64px;
+}
+.rs-performance-breakdown {
+      
+}
+.rs-performance-breakdown .rs-performance-breakdown-item {
+    margin-bottom: 16px;
+}
 
+
+
+.rs-bands-list-item-1 {
+    list-style: none;
+    position: relative;
+}
+
+.rs-bands-list-item-1:before {
+    display: block;
+    border-radius: 50%;
+    width: 12px;
+    position: absolute;
+    height: 12px;
+    content: " ";
+    margin-top: 12px;
+    left: -20px;
+    background-color: #277300 !important;
+}
+
+.rs-bands-list-item-2 {
+    list-style: none;
+    position: relative;
+}
+
+.rs-bands-list-item-2:before {
+    display: block;
+    border-radius: 50%;
+    width: 12px;
+    position: absolute;
+    height: 12px;
+    content: " ";
+    margin-top: 12px;
+    left: -20px;
+    background-color: #72be44 !important;
+}
+
+.rs-bands-list-item-3 {
+    list-style: none;
+    position: relative;
+}
+
+.rs-bands-list-item-3:before {
+    display: block;
+    border-radius: 50%;
+    width: 12px;
+    position: absolute;
+    height: 12px;
+    content: " ";
+    margin-top: 12px;
+    left: -20px;
+    background-color: #ffea41 !important;
+}
+
+.rs-bands-list-item-4 {
+    list-style: none;
+    position: relative;
+}
+
+.rs-bands-list-item-4:before {
+    display: block;
+    border-radius: 50%;
+    width: 12px;
+    position: absolute;
+    height: 12px;
+    content: " ";
+    margin-top: 12px;
+    left: -20px;
+    background-color: #f7a165 !important;
+}
+
+.rs-bands-list-item-5 {
+    list-style: none;
+    position: relative;
+}
+
+.rs-bands-list-item-5:before {
+    display: block;
+    border-radius: 50%;
+    width: 12px;
+    position: absolute;
+    height: 12px;
+    content: " ";
+    margin-top: 12px;
+    left: -20px;
+    background-color: #ef4e45 !important;
+}
+
+.rs-performance-breakdown-item .perf-label {
+    margin: 0 0 0 0;
+}

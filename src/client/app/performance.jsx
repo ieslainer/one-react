@@ -2,6 +2,7 @@ import _ from 'lodash';
 import React from 'react';
 import {render} from 'react-dom';
 import {PieChart} from 'react-d3-basic';
+import {Breakdown} from './breakdown.jsx';
 import createFragment from 'react-addons-create-fragment';
 
 const optionChart = {
@@ -19,9 +20,9 @@ const optionChart = {
     return (d) ? d[0] : null;
   },
   showLegend: false,
-  series:  [{field: "<5", name: " ", color: "#277300"}, {field: "5-13", name: " ", color: "#72be44"},
-    {field: "14-17", name: " ", color: "#ffea41"}, { field: "18-24", name: " ", color: "#f7a165"},
-    {field: "25-44", name: " ", color: "#ef4e45"}]   
+  series:  [{field: "Advanced", name: " ", color: "#277300"}, {field: "Proficient", name: " ", color: "#72be44"},
+    {field: "Basic", name: " ", color: "#ffea41"}, { field: "Below Basic", name: " ", color: "#f7a165"},
+    {field: "Far Below Basic", name: " ", color: "#ef4e45"}]   
 };
 
 export class Performance extends React.Component {
@@ -39,6 +40,12 @@ export class Performance extends React.Component {
         dataChart:{
           pie: null,
           leyend: null
+        },
+        performance:{
+          average: null,
+          itemsCorrect: null,
+          itemsTotal: null,
+          studentTotal: 0
         }     
       };
   }
@@ -76,30 +83,56 @@ export class Performance extends React.Component {
 
   updateData(refId){
     console.log("[Performance] updateData ("+refId+")");
-/*
-    fetch('http://localhost:3002/assessment/' + refId)
+        
+    fetch('http://localhost:3000/graphql', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        query: '{\nsummary(resourceId: "ESC_CA17_OPT_G08U02L00_000") {\n   itemsCorrect\n   itemsTotal\n   average\n   bandSummaries {\n     name\n     uniqueStudents\n     numberOfScores\n     totalStudentScore\n     totalPointsAvailable\n     possibleStudentScore\n     \n   }\n }\n}'
+      })
+    })
     .then((response) => {
         return response.json()
     })
     .then((response) => {
-      console.log("res: " + response);
-      let { headerInformation } = response; 
+      console.log("graphql: ", response);
+      var performance = _.get(response, 'data.summary')
       
-       this.setState({ title: headerInformation.assessment, header: headerInformation.headers[0] });       
+      if(performance){
+        var totalStudent = 0;
+        _.reduce(performance.bandSummaries, function(result, band){
+          return totalStudent += band.uniqueStudents;
+        });
+        
+        var dataPie = { pie: [], leyend: {} };
+        _.each(performance.bandSummaries, function(band){
+          dataPie.leyend[band.name] = band.uniqueStudents;
+          dataPie.pie.push(createFragment({name: band.name, value: band.uniqueStudents }));
+        });
+        
+        
+        this.setState({ performance: {average: performance.average, itemsTotal: performance.itemsTotal, itemsCorrect: performance.itemsCorrect, studentTotal: totalStudent} });  
+        this.setState({dataChart: {pie : dataPie.pie, leyend: dataPie.leyend} });
+      }
       
     });
-*/    
 
+    /*
     var data = require('dsv?delimiter=,!./data/pie_test.csv');
+    console.log("csv :", data);
     var data2 = [];
     _.each(data, function(obj){
       data2.push(createFragment(obj));
     });
-    this.setState({dataChart: {pie : data2} });
+    */
+    
   }
 
   render () {    
-    if(!this.state.refId || !this.state.dataChart.pie ){return <div></div>};
+    if(!this.state.refId || !this.state.dataChart.pie || !this.state.performance.average ){return <div></div>};
       
     return (
       <div className="summary-container performance">
@@ -109,37 +142,40 @@ export class Performance extends React.Component {
         <section>
           <div className='col-xs-8'>
             <h4>Bands</h4>
-            <PieChart
-              title= {optionChart.title}
-              data= {this.state.dataChart.pie}
-              width= {optionChart.width}
-              height= {optionChart.height}
-              chartSeries = {optionChart.series}
-              name = {optionChart.name}
-              value = {optionChart.value}
-              showLegend = {optionChart.showLegend}
-              margins = {optionChart.margins}
-              radius = {optionChart.radius}
-              innerRadius = {optionChart.innerRadius}
-              outerRadius= {optionChart.outerRadius}
-            />    
+            <div className="one-graph">
+              <PieChart
+                title= {optionChart.title}
+                data= {this.state.dataChart.pie}
+                width= {optionChart.width}
+                height= {optionChart.height}
+                chartSeries = {optionChart.series}
+                name = {optionChart.name}
+                value = {optionChart.value}
+                showLegend = {optionChart.showLegend}
+                margins = {optionChart.margins}
+                radius = {optionChart.radius}
+                innerRadius = {optionChart.innerRadius}
+                outerRadius= {optionChart.outerRadius}
+              />
+            </div>
+            <Breakdown data={this.state.dataChart.leyend} total={this.state.performance.studentTotal}></Breakdown>
           </div>
           <div className='col-xs-4 performance-average'>
             <h4>Average</h4>
 
             <div className='label-figure pull-left'>
               <p></p>
-              <p> 43%</p>
+              <p> {this.state.performance.average}%</p>
             </div>
             <div className='label-figure pull-left'>
               <p>Items Correct</p>
-              <p> 8.67/20 </p>
+              <p> {this.state.performance.itemsCorrect}/{this.state.performance.itemsTotal} </p>
             </div>
             <h4>Students</h4>
 
             <div className='label-figure pull-left'>
               <p>Total</p>
-              <p>24</p>
+              <p>{this.state.performance.studentTotal}</p>
             </div>
 
             <div className='clearfix'></div>
