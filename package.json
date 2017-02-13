@@ -25,17 +25,16 @@
     "handlebars": "^4.0.5",
     "load-grunt-config": "^0.19.1",
     "react-d3-basic": "^1.6.11",
-    "webpack": "^1.14.0"
+    "webpack": "^1.14.0",
+    "grunt-webpack": "^2.0.1",
+    "webdriverio": "~4.5.0"
   },
   "devDependencies": {
     "cors": "^2.8.1",
-    "grunt-selenium-webdriver": "^0.2.482",
-    "grunt-webpack": "^2.0.1",
+    "grunt-webdriver": "^2.0.3",
     "wdio-mocha-framework": "^0.5.8",
-    "wdio-selenium-standalone-service": "0.0.8",
-    "webdriverio": "^4.5.0",
+    "wdio-selenium-standalone-service": "~0.0.7",
     "dsv-loader": "^1.0.0",
-    "grunt-webpack": "^2.0.1",
     "lodash": "^4.17.4",
     "react-addons-create-fragment": "^15.4.2"
   }

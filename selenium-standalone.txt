@@ -1,0 +1,28 @@
+13:51:51.408 INFO - Selenium build info: version: '3.0.1', revision: '1969d75'
+13:51:51.409 INFO - Launching a standalone Selenium Server
+2017-02-13 13:51:51.423:INFO::main: Logging initialized @201ms
+13:51:51.472 INFO - Driver class not found: com.opera.core.systems.OperaDriver
+13:51:51.472 INFO - Driver provider com.opera.core.systems.OperaDriver registration is skipped:
+Unable to create new instances on this machine.
+13:51:51.472 INFO - Driver class not found: com.opera.core.systems.OperaDriver
+13:51:51.472 INFO - Driver provider com.opera.core.systems.OperaDriver is not registered
+13:51:51.477 INFO - Driver provider org.openqa.selenium.safari.SafariDriver registration is skipped:
+ registration capabilities Capabilities [{browserName=safari, version=, platform=MAC}] does not match the current platform WIN8_1
+2017-02-13 13:51:51.507:INFO:osjs.Server:main: jetty-9.2.15.v20160210
+2017-02-13 13:51:51.533:INFO:osjsh.ContextHandler:main: Started o.s.j.s.ServletContextHandler@5dfcfece{/,null,AVAILABLE}
+2017-02-13 13:51:51.648:INFO:osjs.ServerConnector:main: Started ServerConnector@43315bc{HTTP/1.1}{0.0.0.0:4444}
+2017-02-13 13:51:51.648:INFO:osjs.Server:main: Started @425ms
+13:51:51.648 INFO - Selenium Server is up and running
+13:51:51.817 INFO - SessionCleaner initialized with insideBrowserTimeout 0 and clientGoneTimeout 1800000 polling every 180000
+13:51:52.939 INFO - Executing: [new session: Capabilities [{rotatable=true, specs=[./test/e2e/test.js], locationContextEnabled=true, loggingPrefs=org.openqa.selenium.logging.LoggingPreferences@2f3a3aea, browserName=chrome, javascriptEnabled=true, handlesAlerts=true, requestOrigins={name=webdriverio, version=4.5.0, url=http://webdriver.io}}]])
+13:51:52.944 INFO - Creating a new session for Capabilities [{rotatable=true, specs=[./test/e2e/test.js], locationContextEnabled=true, loggingPrefs=org.openqa.selenium.logging.LoggingPreferences@2f3a3aea, browserName=chrome, javascriptEnabled=true, handlesAlerts=true, requestOrigins={name=webdriverio, version=4.5.0, url=http://webdriver.io}}]
+Starting ChromeDriver 2.27.440174 (e97a722caafc2d3a8b807ee115bfb307f7d2cfd9) on port 46876
+Only local connections are allowed.
+13:51:53.754 INFO - Attempting bi-dialect session, assuming Postel's Law holds true on the remote end
+13:51:55.126 INFO - Detected dialect: OSS
+13:51:55.138 INFO - Done: [new session: Capabilities [{rotatable=true, specs=[./test/e2e/test.js], locationContextEnabled=true, loggingPrefs=org.openqa.selenium.logging.LoggingPreferences@2f3a3aea, browserName=chrome, javascriptEnabled=true, handlesAlerts=true, requestOrigins={name=webdriverio, version=4.5.0, url=http://webdriver.io}}]]
+13:51:55.194 INFO - Executing: [get: http://webdriver.io])
+13:52:05.295 INFO - Executing: [delete session: 51089827-e972-46b8-a262-761b363c4c5c])
+13:52:07.996 INFO - Done: [get: http://webdriver.io]
+13:52:08.017 INFO - Executing: [get title])
+13:52:08.813 INFO - Done: [delete session: 51089827-e972-46b8-a262-761b363c4c5c]

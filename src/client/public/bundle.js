@@ -68,7 +68,7 @@
 
 	var _summary = __webpack_require__(253);
 
-	var _performance = __webpack_require__(235);
+	var _performance = __webpack_require__(254);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -46885,7 +46885,7 @@
 	//render(<Summary/>, document.getElementById('summary'));
 
 /***/ },
-/* 235 */
+/* 254 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -46897,7 +46897,7 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _lodash = __webpack_require__(236);
+	var _lodash = __webpack_require__(255);
 
 	var _lodash2 = _interopRequireDefault(_lodash);
 
@@ -46905,11 +46905,13 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _reactDom = __webpack_require__(159);
+	var _reactDom = __webpack_require__(33);
 
-	var _reactD3Basic = __webpack_require__(202);
+	var _reactD3Basic = __webpack_require__(221);
 
-	var _reactAddonsCreateFragment = __webpack_require__(238);
+	var _breakdown = __webpack_require__(257);
+
+	var _reactAddonsCreateFragment = __webpack_require__(258);
 
 	var _reactAddonsCreateFragment2 = _interopRequireDefault(_reactAddonsCreateFragment);
 
@@ -46936,7 +46938,7 @@
 	    return d ? d[0] : null;
 	  },
 	  showLegend: false,
-	  series: [{ field: "<5", name: " ", color: "#277300" }, { field: "5-13", name: " ", color: "#72be44" }, { field: "14-17", name: " ", color: "#ffea41" }, { field: "18-24", name: " ", color: "#f7a165" }, { field: "25-44", name: " ", color: "#ef4e45" }]
+	  series: [{ field: "Advanced", name: " ", color: "#277300" }, { field: "Proficient", name: " ", color: "#72be44" }, { field: "Basic", name: " ", color: "#ffea41" }, { field: "Below Basic", name: " ", color: "#f7a165" }, { field: "Far Below Basic", name: " ", color: "#ef4e45" }]
 	};
 
 	var Performance = exports.Performance = function (_React$Component) {
@@ -46956,6 +46958,12 @@
 	      dataChart: {
 	        pie: null,
 	        leyend: null
+	      },
+	      performance: {
+	        average: null,
+	        itemsCorrect: null,
+	        itemsTotal: null,
+	        studentTotal: 0
 	      }
 	    };
 	    return _this;
@@ -46999,32 +47007,55 @@
 	  }, {
 	    key: 'updateData',
 	    value: function updateData(refId) {
-	      console.log("[Performance] updateData (" + refId + ")");
-	      /*
-	          fetch('http://localhost:3002/assessment/' + refId)
-	          .then((response) => {
-	              return response.json()
-	          })
-	          .then((response) => {
-	            console.log("res: " + response);
-	            let { headerInformation } = response; 
-	            
-	             this.setState({ title: headerInformation.assessment, header: headerInformation.headers[0] });       
-	            
-	          });
-	      */
+	      var _this2 = this;
 
-	      var data = __webpack_require__(240);
-	      var data2 = [];
-	      _lodash2.default.each(data, function (obj) {
-	        data2.push((0, _reactAddonsCreateFragment2.default)(obj));
+	      console.log("[Performance] updateData (" + refId + ")");
+
+	      fetch('http://localhost:3000/graphql', {
+	        method: 'POST',
+	        headers: {
+	          'Accept': 'application/json',
+	          'Content-Type': 'application/json'
+	        },
+	        body: JSON.stringify({
+	          query: '{\nsummary(resourceId: "ESC_CA17_OPT_G08U02L00_000") {\n   itemsCorrect\n   itemsTotal\n   average\n   bandSummaries {\n     name\n     uniqueStudents\n     numberOfScores\n     totalStudentScore\n     totalPointsAvailable\n     possibleStudentScore\n     \n   }\n }\n}'
+	        })
+	      }).then(function (response) {
+	        return response.json();
+	      }).then(function (response) {
+	        console.log("graphql: ", response);
+	        var performance = _lodash2.default.get(response, 'data.summary');
+
+	        if (performance) {
+	          var totalStudent = 0;
+	          _lodash2.default.reduce(performance.bandSummaries, function (result, band) {
+	            return totalStudent += band.uniqueStudents;
+	          });
+
+	          var dataPie = { pie: [], leyend: {} };
+	          _lodash2.default.each(performance.bandSummaries, function (band) {
+	            dataPie.leyend[band.name] = band.uniqueStudents;
+	            dataPie.pie.push((0, _reactAddonsCreateFragment2.default)({ name: band.name, value: band.uniqueStudents }));
+	          });
+
+	          _this2.setState({ performance: { average: performance.average, itemsTotal: performance.itemsTotal, itemsCorrect: performance.itemsCorrect, studentTotal: totalStudent } });
+	          _this2.setState({ dataChart: { pie: dataPie.pie, leyend: dataPie.leyend } });
+	        }
 	      });
-	      this.setState({ dataChart: { pie: data2 } });
+
+	      /*
+	      var data = require('dsv?delimiter=,!./data/pie_test.csv');
+	      console.log("csv :", data);
+	      var data2 = [];
+	      _.each(data, function(obj){
+	        data2.push(createFragment(obj));
+	      });
+	      */
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      if (!this.state.refId || !this.state.dataChart.pie) {
+	      if (!this.state.refId || !this.state.dataChart.pie || !this.state.performance.average) {
 	        return _react2.default.createElement('div', null);
 	      };
 
@@ -47051,20 +47082,25 @@
 	              null,
 	              'Bands'
 	            ),
-	            _react2.default.createElement(_reactD3Basic.PieChart, {
-	              title: optionChart.title,
-	              data: this.state.dataChart.pie,
-	              width: optionChart.width,
-	              height: optionChart.height,
-	              chartSeries: optionChart.series,
-	              name: optionChart.name,
-	              value: optionChart.value,
-	              showLegend: optionChart.showLegend,
-	              margins: optionChart.margins,
-	              radius: optionChart.radius,
-	              innerRadius: optionChart.innerRadius,
-	              outerRadius: optionChart.outerRadius
-	            })
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'one-graph' },
+	              _react2.default.createElement(_reactD3Basic.PieChart, {
+	                title: optionChart.title,
+	                data: this.state.dataChart.pie,
+	                width: optionChart.width,
+	                height: optionChart.height,
+	                chartSeries: optionChart.series,
+	                name: optionChart.name,
+	                value: optionChart.value,
+	                showLegend: optionChart.showLegend,
+	                margins: optionChart.margins,
+	                radius: optionChart.radius,
+	                innerRadius: optionChart.innerRadius,
+	                outerRadius: optionChart.outerRadius
+	              })
+	            ),
+	            _react2.default.createElement(_breakdown.Breakdown, { data: this.state.dataChart.leyend, total: this.state.performance.studentTotal })
 	          ),
 	          _react2.default.createElement(
 	            'div',
@@ -47081,7 +47117,9 @@
 	              _react2.default.createElement(
 	                'p',
 	                null,
-	                ' 43%'
+	                ' ',
+	                this.state.performance.average,
+	                '%'
 	              )
 	            ),
 	            _react2.default.createElement(
@@ -47095,7 +47133,11 @@
 	              _react2.default.createElement(
 	                'p',
 	                null,
-	                ' 8.67/20 '
+	                ' ',
+	                this.state.performance.itemsCorrect,
+	                '/',
+	                this.state.performance.itemsTotal,
+	                ' '
 	              )
 	            ),
 	            _react2.default.createElement(
@@ -47114,7 +47156,7 @@
 	              _react2.default.createElement(
 	                'p',
 	                null,
-	                '24'
+	                this.state.performance.studentTotal
 	              )
 	            ),
 	            _react2.default.createElement('div', { className: 'clearfix' })
@@ -47128,7 +47170,7 @@
 	}(_react2.default.Component);
 
 /***/ },
-/* 236 */
+/* 255 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(global, module) {/**
@@ -64216,10 +64258,10 @@
 	  }
 	}.call(this));
 
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(237)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }()), __webpack_require__(256)(module)))
 
 /***/ },
-/* 237 */
+/* 256 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -64235,38 +64277,233 @@
 
 
 /***/ },
-/* 238 */
+/* 257 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(239).create;
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.Breakdown = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(33);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Breakdown = exports.Breakdown = function (_React$Component) {
+	  _inherits(Breakdown, _React$Component);
+
+	  function Breakdown(props) {
+	    _classCallCheck(this, Breakdown);
+
+	    console.log("Component Breakdown");
+	    return _possibleConstructorReturn(this, (Breakdown.__proto__ || Object.getPrototypeOf(Breakdown)).call(this, props));
+	  }
+
+	  _createClass(Breakdown, [{
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
+	      //    console.log("[Breakdown] componentWillMount");
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      //    console.log("[Breakdown] componentDidMount");
+	    }
+	  }, {
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(newProps) {
+	      console.log("[Breakdown] componentWillReceiveProps");
+	    }
+	  }, {
+	    key: 'shouldComponentUpdate',
+	    value: function shouldComponentUpdate(nextProps, nextState) {
+	      //    console.log("[Breakdown] shouldComponentUpdate");
+	      return true;
+	    }
+	  }, {
+	    key: 'componentWillUpdate',
+	    value: function componentWillUpdate(nextProps, nextState) {
+	      console.log("[Breakdown] componentWillUpdate");
+	      //    console.log("nextProps", nextProps);
+	      //    console.log("nextState", nextState);
+	    }
+	  }, {
+	    key: 'componentDidUpdate',
+	    value: function componentDidUpdate() {
+	      //    console.log("[Breakdown] componentDidUpdate");
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+
+	      console.log("{this.props.data.vale} -->>", this.props);
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'summary-breakdown pull-left' },
+	        _react2.default.createElement(
+	          'ul',
+	          { className: 'rs-performance-breakdown' },
+	          _react2.default.createElement(
+	            'li',
+	            { className: 'rs-performance-breakdown-item rs-bands-list-item-1' },
+	            _react2.default.createElement(
+	              'p',
+	              { className: 'perf-label' },
+	              'Advanced (80-100%)'
+	            ),
+	            _react2.default.createElement(
+	              'p',
+	              { className: 'perf-count' },
+	              this.props.data['Advanced'] < 1 ? '0% - ' + this.props.data['Advanced'] + ' student' : _react2.default.createElement(
+	                'a',
+	                { className: 'link' },
+	                Math.round(this.props.data['Advanced'] * 100 / this.props.total) + '% ',
+	                this.props.data['Advanced'],
+	                ' ',
+	                this.props.data['Advanced'] == 1 ? 'student' : 'students'
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'li',
+	            { className: 'rs-performance-breakdown-item rs-bands-list-item-2' },
+	            _react2.default.createElement(
+	              'p',
+	              { className: 'perf-label' },
+	              'Proficient (60-79%)'
+	            ),
+	            _react2.default.createElement(
+	              'p',
+	              { className: 'perf-count' },
+	              this.props.data['Proficient'] < 1 ? '0% - ' + this.props.data['Proficient'] + ' student' : _react2.default.createElement(
+	                'a',
+	                { className: 'link' },
+	                Math.round(this.props.data['Proficient'] * 100 / this.props.total) + '% ',
+	                this.props.data['Proficient'],
+	                ' ',
+	                this.props.data['Proficient'] == 1 ? 'student' : 'students'
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'li',
+	            { className: 'rs-performance-breakdown-item rs-bands-list-item-3' },
+	            _react2.default.createElement(
+	              'p',
+	              { className: 'perf-label' },
+	              'Basic (40-59%)'
+	            ),
+	            _react2.default.createElement(
+	              'p',
+	              { className: 'perf-count' },
+	              this.props.data['Basic'] < 1 ? '0% - ' + this.props.data['Basic'] + ' student' : _react2.default.createElement(
+	                'a',
+	                { className: 'link' },
+	                Math.round(this.props.data['Basic'] * 100 / this.props.total) + '% ',
+	                this.props.data['Basic'],
+	                ' ',
+	                this.props.data['Basic'] == 1 ? 'student' : 'students'
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'li',
+	            { className: 'rs-performance-breakdown-item rs-bands-list-item-4' },
+	            _react2.default.createElement(
+	              'p',
+	              { className: 'perf-label' },
+	              'Below Basic (20-39%)'
+	            ),
+	            _react2.default.createElement(
+	              'p',
+	              { className: 'perf-count' },
+	              this.props.data['Below Basic'] < 1 ? '0% - ' + this.props.data['Below Basic'] + ' student' : _react2.default.createElement(
+	                'a',
+	                { className: 'link' },
+	                Math.round(this.props.data['Below Basic'] * 100 / this.props.total) + '% ',
+	                this.props.data['Below Basic'],
+	                ' ',
+	                this.props.data['Below Basic'] == 1 ? 'student' : 'students'
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'li',
+	            { className: 'rs-performance-breakdown-item rs-bands-list-item-5' },
+	            _react2.default.createElement(
+	              'p',
+	              { className: 'perf-label' },
+	              'Far Below Basic (0-19%)'
+	            ),
+	            _react2.default.createElement(
+	              'p',
+	              { className: 'perf-count' },
+	              this.props.data['Far Below Basic'] < 1 ? '0% - ' + this.props.data['Far Below Basic'] + ' student' : _react2.default.createElement(
+	                'a',
+	                { className: 'link' },
+	                Math.round(this.props.data['Far Below Basic'] * 100 / this.props.total) + '% - ',
+	                this.props.data['Far Below Basic'],
+	                ' ',
+	                this.props.data['Far Below Basic'] == 1 ? 'student' : 'students'
+	              )
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }]);
+
+	  return Breakdown;
+	}(_react2.default.Component);
 
 /***/ },
-/* 239 */
+/* 258 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__(259).create;
+
+/***/ },
+/* 259 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
-	 * Copyright 2015, Facebook, Inc.
+	 * Copyright 2015-present, Facebook, Inc.
 	 * All rights reserved.
 	 *
 	 * This source code is licensed under the BSD-style license found in the
 	 * LICENSE file in the root directory of this source tree. An additional grant
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 *
-	 * @providesModule ReactFragment
 	 */
 
 	'use strict';
 
-	var ReactChildren = __webpack_require__(111);
-	var ReactElement = __webpack_require__(43);
+	var _prodInvariant = __webpack_require__(8);
 
-	var emptyFunction = __webpack_require__(16);
-	var invariant = __webpack_require__(14);
-	var warning = __webpack_require__(26);
+	var ReactChildren = __webpack_require__(6);
+	var ReactElement = __webpack_require__(10);
+
+	var emptyFunction = __webpack_require__(13);
+	var invariant = __webpack_require__(9);
+	var warning = __webpack_require__(12);
 
 	/**
 	 * We used to allow keyed objects to serve as a collection of ReactElements,
-	 * or nested sets. This allowed us a way to explicitly key a set a fragment of
+	 * or nested sets. This allowed us a way to explicitly key a set or fragment of
 	 * components. This is now being replaced with an opaque data structure.
 	 * The upgrade path is to call React.addons.createFragment({ key: value }) to
 	 * create a keyed fragment. The resulting data structure is an array.
@@ -64277,26 +64514,29 @@
 	var warnedAboutNumeric = false;
 
 	var ReactFragment = {
-	  // Wrap a keyed object in an opaque proxy that warns you if you access any
-	  // of its properties.
+	  /**
+	   * Wrap a keyed object in an opaque proxy that warns you if you access any
+	   * of its properties.
+	   * See https://facebook.github.io/react/docs/create-fragment.html
+	   */
 	  create: function (object) {
 	    if (typeof object !== 'object' || !object || Array.isArray(object)) {
-	      process.env.NODE_ENV !== 'production' ? warning(false, 'React.addons.createFragment only accepts a single object. Got: %s', object) : undefined;
+	      process.env.NODE_ENV !== 'production' ? warning(false, 'React.addons.createFragment only accepts a single object. Got: %s', object) : void 0;
 	      return object;
 	    }
 	    if (ReactElement.isValidElement(object)) {
-	      process.env.NODE_ENV !== 'production' ? warning(false, 'React.addons.createFragment does not accept a ReactElement ' + 'without a wrapper object.') : undefined;
+	      process.env.NODE_ENV !== 'production' ? warning(false, 'React.addons.createFragment does not accept a ReactElement ' + 'without a wrapper object.') : void 0;
 	      return object;
 	    }
 
-	    !(object.nodeType !== 1) ? process.env.NODE_ENV !== 'production' ? invariant(false, 'React.addons.createFragment(...): Encountered an invalid child; DOM ' + 'elements are not valid children of React components.') : invariant(false) : undefined;
+	    !(object.nodeType !== 1) ? process.env.NODE_ENV !== 'production' ? invariant(false, 'React.addons.createFragment(...): Encountered an invalid child; DOM elements are not valid children of React components.') : _prodInvariant('0') : void 0;
 
 	    var result = [];
 
 	    for (var key in object) {
 	      if (process.env.NODE_ENV !== 'production') {
 	        if (!warnedAboutNumeric && numericPropertyRegex.test(key)) {
-	          process.env.NODE_ENV !== 'production' ? warning(false, 'React.addons.createFragment(...): Child objects should have ' + 'non-numeric keys so ordering is preserved.') : undefined;
+	          process.env.NODE_ENV !== 'production' ? warning(false, 'React.addons.createFragment(...): Child objects should have ' + 'non-numeric keys so ordering is preserved.') : void 0;
 	          warnedAboutNumeric = true;
 	        }
 	      }
@@ -64308,13 +64548,7 @@
 	};
 
 	module.exports = ReactFragment;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
-
-/***/ },
-/* 240 */
-/***/ function(module, exports) {
-
-	module.exports = [{"age":"<5","population":"2704659"},{"age":"5-13","population":"4499890"},{"age":"14-17","population":"2159981"},{"age":"18-24","population":"3853788"},{"age":"25-44","population":"14106543"}]
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ }
 /******/ ]);
