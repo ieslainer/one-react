@@ -70,6 +70,8 @@
 
 	var _performance = __webpack_require__(235);
 
+	var _simpleSelect = __webpack_require__(241);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -87,8 +89,11 @@
 	    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this));
 
 	    _this.state = {
-	      assessmentRefId: null
+	      assessmentRefId: null,
+	      assignmentRefId: null
 	    };
+
+	    _this.updateAssignment = _this.updateAssignment.bind(_this);
 	    return _this;
 	  }
 
@@ -99,46 +104,27 @@
 	      this.setState({ assessmentRefId: refId });
 	    }
 	  }, {
+	    key: 'updateAssignment',
+	    value: function updateAssignment(refId) {
+	      console.log("updateAssignment update ref: " + refId);
+	      this.setState({ assignmentRefId: refId });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _this2 = this;
 
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        _react2.default.createElement(
-	          'p',
-	          null,
-	          _react2.default.createElement(
-	            'button',
-	            { type: 'button', className: 'btn btn-default', onClick: function onClick() {
-	                return _this2.selectAssessent('ESC_CA17_OPT_G08U02L00_000');
-	              } },
-	            'Online Pretest: Unit 2 RR'
-	          ),
-	          _react2.default.createElement(
-	            'button',
-	            { type: 'button', className: 'btn btn-default', onClick: function onClick() {
-	                return _this2.selectAssessent('ESC_CA17_OPT_G06U01L00_000');
-	              } },
-	            'Online Pretest: Unit 1'
-	          ),
-	          _react2.default.createElement(
-	            'button',
-	            { type: 'button', className: 'btn btn-default', onClick: function onClick() {
-	                return _this2.selectAssessent('LTCA17_G06C00L00_OA_038');
-	              } },
-	            'Grade 6 CAASPP ELA Practice Test 1'
-	          )
-	        ),
-	        _react2.default.createElement(_summary.Summary, { refId: this.state.assessmentRefId }),
+	        _react2.default.createElement(_simpleSelect.Select, { updateRefId: this.updateAssignment }),
+	        _react2.default.createElement(_summary.Summary, { refId: this.state.assignmentRefId }),
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'summary-columns' },
 	          _react2.default.createElement(
 	            'div',
 	            null,
-	            _react2.default.createElement(_performance.Performance, { refId: this.state.assessmentRefId })
+	            _react2.default.createElement(_performance.Performance, { refId: this.state.assignmentRefId })
 	          )
 	        )
 	      );
@@ -149,6 +135,14 @@
 	}(_react2.default.Component);
 
 	(0, _reactDom.render)(_react2.default.createElement(App, null), document.getElementById('app'));
+
+	/*
+	<p>
+	  <button type="button" className="btn btn-default" onClick={ () => this.selectAssessent('ESC_CA17_OPT_G08U02L00_000') }>Online Pretest: Unit 2 RR</button>
+	  <button type="button" className="btn btn-default" onClick={ () => this.selectAssessent('ESC_CA17_OPT_G06U01L00_000') }>Online Pretest: Unit 1</button>
+	  <button type="button" className="btn btn-default" onClick={ () => this.selectAssessent('LTCA17_G06C00L00_OA_038') }>Grade 6 CAASPP ELA Practice Test 1</button>
+	</p>
+	*/
 
 /***/ },
 /* 2 */
@@ -44949,14 +44943,28 @@
 	      var _this2 = this;
 
 	      console.log("updateData (" + refId + ")");
-	      fetch('http://localhost:3002/assessment/' + refId).then(function (response) {
+
+	      fetch('http://localhost:3000/graphql', {
+	        method: 'POST',
+	        headers: {
+	          'Accept': 'application/json',
+	          'Content-Type': 'application/json'
+	        },
+	        body: JSON.stringify({
+	          query: '{\nheader(resourceId: "' + refId + '") {\nclasscount\nschoolcount\nstudentcount   \ngradecount    \nlea_name    \nlea_refid    \nclassname    \nclass_id    \nschoolname    \nschool_refid    \ngrade    \nstaff_given_name    \nstaff_family_name   \nassessment_event_name \nin_progress \nnot_started \ncompleted \n}\n}'
+	        })
+	      })
+	      //    fetch('http://localhost:3002/assessment/' + refId)
+	      .then(function (response) {
 	        return response.json();
 	      }).then(function (response) {
-	        console.log("res: " + response);
+	        console.log("res: ", response);
 	        var headerInformation = response.headerInformation;
 
-
-	        _this2.setState({ title: headerInformation.assessment, header: headerInformation.headers[0] });
+	        var header = _.get(response, 'data.header') || _.get(response, 'data.summary');
+	        if (header) {
+	          _this2.setState({ title: header.assessment_event_name, header: header });
+	        }
 	      });
 	    }
 	  }, {
@@ -44986,10 +44994,7 @@
 	                  'li',
 	                  null,
 	                  'Summary Report: ',
-	                  this.state.title,
-	                  ' (',
-	                  this.state.refId,
-	                  ')'
+	                  this.state.title
 	                ),
 	                _react2.default.createElement('li', null)
 	              )
@@ -45028,7 +45033,7 @@
 	                  _react2.default.createElement(
 	                    'span',
 	                    { className: 'drkBld' },
-	                    this.state.header.classRefId || 'All Classes'
+	                    this.state.header.classname || 'All Classes'
 	                  )
 	                ),
 	                _react2.default.createElement(
@@ -45038,7 +45043,7 @@
 	                  _react2.default.createElement(
 	                    'span',
 	                    { className: 'drkBld' },
-	                    this.state.header.teacherGivenName || 'All Teachers'
+	                    this.state.header.staff_given_name || 'All Teachers'
 	                  )
 	                ),
 	                _react2.default.createElement(
@@ -45068,7 +45073,7 @@
 	                  _react2.default.createElement(
 	                    'span',
 	                    { className: 'drkBld' },
-	                    this.state.header.schoolRefId || 'All Schools'
+	                    this.state.header.schoolname || 'All Schools'
 	                  )
 	                ),
 	                _react2.default.createElement(
@@ -45078,7 +45083,7 @@
 	                  _react2.default.createElement(
 	                    'span',
 	                    { className: 'drkBld' },
-	                    this.state.header.districtName
+	                    this.state.header.lea_name
 	                  )
 	                )
 	              )
@@ -45099,7 +45104,7 @@
 	                    _react2.default.createElement(
 	                      'strong',
 	                      null,
-	                      '0'
+	                      this.state.header.not_started
 	                    )
 	                  )
 	                ),
@@ -45113,7 +45118,7 @@
 	                    _react2.default.createElement(
 	                      'strong',
 	                      null,
-	                      '0'
+	                      this.state.header.in_progress
 	                    )
 	                  )
 	                ),
@@ -45127,7 +45132,7 @@
 	                    _react2.default.createElement(
 	                      'strong',
 	                      null,
-	                      '0'
+	                      this.state.header.completed
 	                    )
 	                  )
 	                )
@@ -45169,7 +45174,9 @@
 
 	var _reactD3Basic = __webpack_require__(202);
 
-	var _reactAddonsCreateFragment = __webpack_require__(238);
+	var _breakdown = __webpack_require__(238);
+
+	var _reactAddonsCreateFragment = __webpack_require__(239);
 
 	var _reactAddonsCreateFragment2 = _interopRequireDefault(_reactAddonsCreateFragment);
 
@@ -45196,7 +45203,7 @@
 	    return d ? d[0] : null;
 	  },
 	  showLegend: false,
-	  series: [{ field: "<5", name: " ", color: "#277300" }, { field: "5-13", name: " ", color: "#72be44" }, { field: "14-17", name: " ", color: "#ffea41" }, { field: "18-24", name: " ", color: "#f7a165" }, { field: "25-44", name: " ", color: "#ef4e45" }]
+	  series: [{ field: "Advanced", name: " ", color: "#277300" }, { field: "Proficient", name: " ", color: "#72be44" }, { field: "Basic", name: " ", color: "#ffea41" }, { field: "Below Basic", name: " ", color: "#f7a165" }, { field: "Far Below Basic", name: " ", color: "#ef4e45" }]
 	};
 
 	var Performance = exports.Performance = function (_React$Component) {
@@ -45216,6 +45223,12 @@
 	      dataChart: {
 	        pie: null,
 	        leyend: null
+	      },
+	      performance: {
+	        average: null,
+	        itemsCorrect: null,
+	        itemsTotal: null,
+	        studentTotal: 0
 	      }
 	    };
 	    return _this;
@@ -45259,32 +45272,55 @@
 	  }, {
 	    key: 'updateData',
 	    value: function updateData(refId) {
-	      console.log("[Performance] updateData (" + refId + ")");
-	      /*
-	          fetch('http://localhost:3002/assessment/' + refId)
-	          .then((response) => {
-	              return response.json()
-	          })
-	          .then((response) => {
-	            console.log("res: " + response);
-	            let { headerInformation } = response; 
-	            
-	             this.setState({ title: headerInformation.assessment, header: headerInformation.headers[0] });       
-	            
-	          });
-	      */
+	      var _this2 = this;
 
-	      var data = __webpack_require__(240);
-	      var data2 = [];
-	      _lodash2.default.each(data, function (obj) {
-	        data2.push((0, _reactAddonsCreateFragment2.default)(obj));
+	      console.log("[Performance] updateData (" + refId + ")");
+
+	      fetch('http://localhost:3000/graphql', {
+	        method: 'POST',
+	        headers: {
+	          'Accept': 'application/json',
+	          'Content-Type': 'application/json'
+	        },
+	        body: JSON.stringify({
+	          query: '{\nsummary(resourceId: "' + refId + '") {\n   itemsCorrect\n   itemsTotal\n   average\n   bandSummaries {\n     name\n     uniqueStudents\n     numberOfScores\n     totalStudentScore\n     totalPointsAvailable\n     possibleStudentScore\n     \n   }\n }\n}'
+	        })
+	      }).then(function (response) {
+	        return response.json();
+	      }).then(function (response) {
+	        console.log("graphql: ", response);
+	        var performance = _lodash2.default.get(response, 'data.summary');
+
+	        if (performance) {
+	          var totalStudent = 0;
+	          _lodash2.default.reduce(performance.bandSummaries, function (result, band) {
+	            return totalStudent += band.uniqueStudents;
+	          });
+
+	          var dataPie = { pie: [], leyend: {} };
+	          _lodash2.default.each(performance.bandSummaries, function (band) {
+	            dataPie.leyend[band.name] = band.uniqueStudents;
+	            dataPie.pie.push((0, _reactAddonsCreateFragment2.default)({ name: band.name, value: band.uniqueStudents }));
+	          });
+
+	          _this2.setState({ performance: { average: performance.average, itemsTotal: performance.itemsTotal, itemsCorrect: performance.itemsCorrect, studentTotal: totalStudent } });
+	          _this2.setState({ dataChart: { pie: dataPie.pie, leyend: dataPie.leyend } });
+	        }
 	      });
-	      this.setState({ dataChart: { pie: data2 } });
+
+	      /*
+	      var data = require('dsv?delimiter=,!./data/pie_test.csv');
+	      console.log("csv :", data);
+	      var data2 = [];
+	      _.each(data, function(obj){
+	        data2.push(createFragment(obj));
+	      });
+	      */
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      if (!this.state.refId || !this.state.dataChart.pie) {
+	      if (!this.state.refId || !this.state.dataChart.pie || !this.state.performance.average) {
 	        return _react2.default.createElement('div', null);
 	      };
 
@@ -45311,20 +45347,25 @@
 	              null,
 	              'Bands'
 	            ),
-	            _react2.default.createElement(_reactD3Basic.PieChart, {
-	              title: optionChart.title,
-	              data: this.state.dataChart.pie,
-	              width: optionChart.width,
-	              height: optionChart.height,
-	              chartSeries: optionChart.series,
-	              name: optionChart.name,
-	              value: optionChart.value,
-	              showLegend: optionChart.showLegend,
-	              margins: optionChart.margins,
-	              radius: optionChart.radius,
-	              innerRadius: optionChart.innerRadius,
-	              outerRadius: optionChart.outerRadius
-	            })
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'one-graph' },
+	              _react2.default.createElement(_reactD3Basic.PieChart, {
+	                title: optionChart.title,
+	                data: this.state.dataChart.pie,
+	                width: optionChart.width,
+	                height: optionChart.height,
+	                chartSeries: optionChart.series,
+	                name: optionChart.name,
+	                value: optionChart.value,
+	                showLegend: optionChart.showLegend,
+	                margins: optionChart.margins,
+	                radius: optionChart.radius,
+	                innerRadius: optionChart.innerRadius,
+	                outerRadius: optionChart.outerRadius
+	              })
+	            ),
+	            _react2.default.createElement(_breakdown.Breakdown, { data: this.state.dataChart.leyend, total: this.state.performance.studentTotal })
 	          ),
 	          _react2.default.createElement(
 	            'div',
@@ -45341,7 +45382,9 @@
 	              _react2.default.createElement(
 	                'p',
 	                null,
-	                ' 43%'
+	                ' ',
+	                this.state.performance.average,
+	                '%'
 	              )
 	            ),
 	            _react2.default.createElement(
@@ -45355,7 +45398,11 @@
 	              _react2.default.createElement(
 	                'p',
 	                null,
-	                ' 8.67/20 '
+	                ' ',
+	                this.state.performance.itemsCorrect,
+	                '/',
+	                this.state.performance.itemsTotal,
+	                ' '
 	              )
 	            ),
 	            _react2.default.createElement(
@@ -45374,7 +45421,7 @@
 	              _react2.default.createElement(
 	                'p',
 	                null,
-	                '24'
+	                this.state.performance.studentTotal
 	              )
 	            ),
 	            _react2.default.createElement('div', { className: 'clearfix' })
@@ -62498,10 +62545,204 @@
 /* 238 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(239).create;
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.Breakdown = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(159);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Breakdown = exports.Breakdown = function (_React$Component) {
+	  _inherits(Breakdown, _React$Component);
+
+	  function Breakdown(props) {
+	    _classCallCheck(this, Breakdown);
+
+	    console.log("Component Breakdown");
+	    return _possibleConstructorReturn(this, (Breakdown.__proto__ || Object.getPrototypeOf(Breakdown)).call(this, props));
+	  }
+
+	  _createClass(Breakdown, [{
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
+	      //    console.log("[Breakdown] componentWillMount");
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      //    console.log("[Breakdown] componentDidMount");
+	    }
+	  }, {
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(newProps) {
+	      console.log("[Breakdown] componentWillReceiveProps");
+	    }
+	  }, {
+	    key: 'shouldComponentUpdate',
+	    value: function shouldComponentUpdate(nextProps, nextState) {
+	      //    console.log("[Breakdown] shouldComponentUpdate");
+	      return true;
+	    }
+	  }, {
+	    key: 'componentWillUpdate',
+	    value: function componentWillUpdate(nextProps, nextState) {
+	      console.log("[Breakdown] componentWillUpdate");
+	      //    console.log("nextProps", nextProps);
+	      //    console.log("nextState", nextState);
+	    }
+	  }, {
+	    key: 'componentDidUpdate',
+	    value: function componentDidUpdate() {
+	      //    console.log("[Breakdown] componentDidUpdate");
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+
+	      console.log("{this.props.data.vale} -->>", this.props);
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'summary-breakdown pull-left' },
+	        _react2.default.createElement(
+	          'ul',
+	          { className: 'rs-performance-breakdown' },
+	          _react2.default.createElement(
+	            'li',
+	            { className: 'rs-performance-breakdown-item rs-bands-list-item-1' },
+	            _react2.default.createElement(
+	              'p',
+	              { className: 'perf-label' },
+	              'Advanced (80-100%)'
+	            ),
+	            _react2.default.createElement(
+	              'p',
+	              { className: 'perf-count' },
+	              this.props.data['Advanced'] < 1 ? '0% - ' + this.props.data['Advanced'] + ' student' : _react2.default.createElement(
+	                'a',
+	                { className: 'link' },
+	                Math.round(this.props.data['Advanced'] * 100 / this.props.total) + '% ',
+	                this.props.data['Advanced'],
+	                ' ',
+	                this.props.data['Advanced'] == 1 ? 'student' : 'students'
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'li',
+	            { className: 'rs-performance-breakdown-item rs-bands-list-item-2' },
+	            _react2.default.createElement(
+	              'p',
+	              { className: 'perf-label' },
+	              'Proficient (60-79%)'
+	            ),
+	            _react2.default.createElement(
+	              'p',
+	              { className: 'perf-count' },
+	              this.props.data['Proficient'] < 1 ? '0% - ' + this.props.data['Proficient'] + ' student' : _react2.default.createElement(
+	                'a',
+	                { className: 'link' },
+	                Math.round(this.props.data['Proficient'] * 100 / this.props.total) + '% ',
+	                this.props.data['Proficient'],
+	                ' ',
+	                this.props.data['Proficient'] == 1 ? 'student' : 'students'
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'li',
+	            { className: 'rs-performance-breakdown-item rs-bands-list-item-3' },
+	            _react2.default.createElement(
+	              'p',
+	              { className: 'perf-label' },
+	              'Basic (40-59%)'
+	            ),
+	            _react2.default.createElement(
+	              'p',
+	              { className: 'perf-count' },
+	              this.props.data['Basic'] < 1 ? '0% - ' + this.props.data['Basic'] + ' student' : _react2.default.createElement(
+	                'a',
+	                { className: 'link' },
+	                Math.round(this.props.data['Basic'] * 100 / this.props.total) + '% ',
+	                this.props.data['Basic'],
+	                ' ',
+	                this.props.data['Basic'] == 1 ? 'student' : 'students'
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'li',
+	            { className: 'rs-performance-breakdown-item rs-bands-list-item-4' },
+	            _react2.default.createElement(
+	              'p',
+	              { className: 'perf-label' },
+	              'Below Basic (20-39%)'
+	            ),
+	            _react2.default.createElement(
+	              'p',
+	              { className: 'perf-count' },
+	              this.props.data['Below Basic'] < 1 ? '0% - ' + this.props.data['Below Basic'] + ' student' : _react2.default.createElement(
+	                'a',
+	                { className: 'link' },
+	                Math.round(this.props.data['Below Basic'] * 100 / this.props.total) + '% ',
+	                this.props.data['Below Basic'],
+	                ' ',
+	                this.props.data['Below Basic'] == 1 ? 'student' : 'students'
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'li',
+	            { className: 'rs-performance-breakdown-item rs-bands-list-item-5' },
+	            _react2.default.createElement(
+	              'p',
+	              { className: 'perf-label' },
+	              'Far Below Basic (0-19%)'
+	            ),
+	            _react2.default.createElement(
+	              'p',
+	              { className: 'perf-count' },
+	              this.props.data['Far Below Basic'] < 1 ? '0% - ' + this.props.data['Far Below Basic'] + ' student' : _react2.default.createElement(
+	                'a',
+	                { className: 'link' },
+	                Math.round(this.props.data['Far Below Basic'] * 100 / this.props.total) + '% - ',
+	                this.props.data['Far Below Basic'],
+	                ' ',
+	                this.props.data['Far Below Basic'] == 1 ? 'student' : 'students'
+	              )
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }]);
+
+	  return Breakdown;
+	}(_react2.default.Component);
 
 /***/ },
 /* 239 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = __webpack_require__(240).create;
+
+/***/ },
+/* 240 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -62571,10 +62812,162 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
 
 /***/ },
-/* 240 */
-/***/ function(module, exports) {
+/* 241 */
+/***/ function(module, exports, __webpack_require__) {
 
-	module.exports = [{"age":"<5","population":"2704659"},{"age":"5-13","population":"4499890"},{"age":"14-17","population":"2159981"},{"age":"18-24","population":"3853788"},{"age":"25-44","population":"14106543"}]
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.Select = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactDom = __webpack_require__(159);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var options = ["Select an Option", "First Option", "Second Option", "Third Option"];
+
+	var Select = exports.Select = function (_React$Component) {
+	  _inherits(Select, _React$Component);
+
+	  function Select() {
+	    _classCallCheck(this, Select);
+
+	    console.log("Component Select");
+
+	    var _this = _possibleConstructorReturn(this, (Select.__proto__ || Object.getPrototypeOf(Select)).call(this));
+
+	    _this.state = {
+	      value: 'Select an Option',
+	      options: []
+	    };
+	    return _this;
+	  }
+
+	  _createClass(Select, [{
+	    key: 'onChange',
+	    value: function onChange(e) {
+	      this.setState({
+	        value: e.target.value
+	      });
+	      this.props.updateRefId(e.target.value);
+	    }
+	  }, {
+	    key: 'componentWillMount',
+	    value: function componentWillMount() {
+	      console.log("[Select] componentWillMount");
+	      if (_.isEmpty(this.state.options)) {
+	        this.getAssignments();
+	      }
+	    }
+	  }, {
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      console.log("[Select] componentDidMount");
+	    }
+	  }, {
+	    key: 'componentWillReceiveProps',
+	    value: function componentWillReceiveProps(newProps) {
+	      console.log("[Select] componentWillReceiveProps");
+	    }
+	  }, {
+	    key: 'shouldComponentUpdate',
+	    value: function shouldComponentUpdate(nextProps, nextState) {
+	      console.log("[Select] shouldComponentUpdate");
+	      //    console.log("nextProps", nextProps);
+	      //    console.log("nextState", nextState);
+	      return true;
+	    }
+	  }, {
+	    key: 'componentWillUpdate',
+	    value: function componentWillUpdate(nextProps, nextState) {
+	      console.log("[Select] componentWillUpdate");
+	      //    console.log("nextProps", nextProps);
+	      //    console.log("nextState", nextState);
+	      if (nextProps.refId != nextState.refId) {
+	        //      this.updateData();
+	      }
+	    }
+	  }, {
+	    key: 'componentDidUpdate',
+	    value: function componentDidUpdate() {
+	      console.log("[Select] componentDidUpdate");
+	    }
+	  }, {
+	    key: 'getAssignments',
+	    value: function getAssignments() {
+	      var _this2 = this;
+
+	      console.log("[Select] getAssignments");
+
+	      fetch('http://localhost:3000/graphql', {
+	        method: 'POST',
+	        headers: {
+	          'Accept': 'application/json',
+	          'Content-Type': 'application/json'
+	        },
+	        body: JSON.stringify({
+	          query: '{\n  assignments {\n resource_id\n activity_id \n event_refid \n activity_name \n student_tested_count \n student_included_count \n avg_points_correct \n avg_items_correct \n proficiency_avg \n basic_students_count \n } \n }'
+	        })
+	      }).then(function (response) {
+	        return response.json();
+	      }).then(function (response) {
+	        console.log("res: " + response);
+	        var headerInformation = response.headerInformation;
+
+	        var assignments = _.get(response, 'data.assignments');
+	        if (assignments) {
+	          var list = _.map(assignments, function (assignment) {
+	            return _.pick(assignment, ['resource_id', 'activity_id', 'event_refid']);
+	          });
+	          console.log("List >", list);
+	          _this2.setState({ options: list });
+	        }
+	      });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      console.log("[Select] render");
+	      return _react2.default.createElement(
+	        'div',
+	        { className: 'form-group' },
+	        _react2.default.createElement(
+	          'label',
+	          { htmlFor: 'select2' },
+	          'Assignments'
+	        ),
+	        _react2.default.createElement(
+	          'select',
+	          { value: this.state.value, onChange: this.onChange.bind(this), className: 'form-control' },
+	          this.state.options.map(function (option) {
+	            //            console.log("option >> ", option );
+	            return _react2.default.createElement(
+	              'option',
+	              { value: option.resource_id, key: option.resource_id },
+	              option.resource_id
+	            );
+	          })
+	        )
+	      );
+	    }
+	  }]);
+
+	  return Select;
+	}(_react2.default.Component);
 
 /***/ }
 /******/ ]);

@@ -91,7 +91,7 @@ export class Performance extends React.Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        query: '{\nsummary(resourceId: "ESC_CA17_OPT_G08U02L00_000") {\n   itemsCorrect\n   itemsTotal\n   average\n   bandSummaries {\n     name\n     uniqueStudents\n     numberOfScores\n     totalStudentScore\n     totalPointsAvailable\n     possibleStudentScore\n     \n   }\n }\n}'
+        query: '{\nsummary(resourceId: "'+refId+'") {\n   itemsCorrect\n   itemsTotal\n   average\n   bandSummaries {\n     name\n     uniqueStudents\n     numberOfScores\n     totalStudentScore\n     totalPointsAvailable\n     possibleStudentScore\n     \n   }\n }\n}'
       })
     })
     .then((response) => {
