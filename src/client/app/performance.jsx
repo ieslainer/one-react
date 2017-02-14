@@ -26,9 +26,7 @@ const optionChart = {
 };
 
 export class Performance extends React.Component {
-  
-  
-  
+    
   constructor(props) {
       console.log("Component Performance");
       super(props);
@@ -37,6 +35,7 @@ export class Performance extends React.Component {
         title: null,
         header:{},
         refId : null,
+        eventRefId: null,
         dataChart:{
           pie: null,
           leyend: null
@@ -61,7 +60,7 @@ export class Performance extends React.Component {
   componentWillReceiveProps(newProps) {
 //    console.log("[Performance] componentWillReceiveProps");
     if(this.state.refId != newProps.refId){
-      this.setState({refId: newProps.refId});
+      this.setState({refId: newProps.refId, eventRefId: newProps.eventRefId});
       this.updateData(newProps.refId);
     }  
   }
@@ -82,7 +81,7 @@ export class Performance extends React.Component {
   }
 
   updateData(refId){
-    console.log("[Performance] updateData ("+refId+")");
+//    console.log("[Performance] updateData ("+refId+")");
         
     fetch('http://localhost:3000/graphql', {
       method: 'POST',
@@ -158,7 +157,7 @@ export class Performance extends React.Component {
                 outerRadius= {optionChart.outerRadius}
               />
             </div>
-            <Breakdown data={this.state.dataChart.leyend} total={this.state.performance.studentTotal}></Breakdown>
+            <Breakdown data={this.state.dataChart.leyend} total={this.state.performance.studentTotal} refId={this.state.refId} eventRefId={this.state.eventRefId}></Breakdown>
           </div>
           <div className='col-xs-4 performance-average'>
             <h4>Average</h4>
