@@ -7,11 +7,5 @@ module.exports = function(grunt){
 
   grunt.loadNpmTasks('grunt-webdriver')
 
-  grunt.initConfig({
-      webdriver: {
-          test: {
-              configFile: './test/wdio.conf.js',
-          }
-      }
-  });
+  grunt.registerTask('e2e', ['build', 'connect:server','webdriver']);
 };
