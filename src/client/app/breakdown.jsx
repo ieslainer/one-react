@@ -1,5 +1,6 @@
 import React from 'react';
 import {render} from 'react-dom';
+import {Link} from 'react-router';
 
 export class Breakdown extends React.Component {
   
@@ -17,31 +18,20 @@ export class Breakdown extends React.Component {
   }
   
   componentWillReceiveProps(newProps) {
-    console.log("[Breakdown] componentWillReceiveProps");
-      
+//    console.log("[Breakdown] componentWillReceiveProps");    
   }
   
-  shouldComponentUpdate(nextProps, nextState){
-//    console.log("[Breakdown] shouldComponentUpdate");
-    return true;
-  }
   
   componentWillUpdate(nextProps, nextState){
-    console.log("[Breakdown] componentWillUpdate");
-//    console.log("nextProps", nextProps);
-//    console.log("nextState", nextState);
+//    console.log("[Breakdown] componentWillUpdate");
   }
-  
-  
-  
+    
   componentDidUpdate(){
 //    console.log("[Breakdown] componentDidUpdate");
   }
 
   
-  render () {
-  
-    console.log("{this.props.data.vale} -->>", this.props );
+  render () {  
     return (
       <div className="summary-breakdown pull-left">
         <ul className="rs-performance-breakdown">
@@ -51,10 +41,10 @@ export class Breakdown extends React.Component {
               { (this.props.data['Advanced'] < 1) ? (
                 '0% - ' + this.props.data['Advanced'] + ' student'
               ) : (
-                <a className="link">
+                <Link className="link" to={"/performance-list/"+this.props.refId+"/"+this.props.eventRefId}>
                    { Math.round((this.props.data['Advanced']*100)/this.props.total) + '% '}
                    { this.props.data['Advanced']} {(this.props.data['Advanced'] == 1) ? 'student': 'students'} 
-                </a>
+                </Link>
               )}
             </p>
           </li>
@@ -64,10 +54,10 @@ export class Breakdown extends React.Component {
               { (this.props.data['Proficient'] < 1) ? (
                 '0% - ' + this.props.data['Proficient'] + ' student'
               ) : (
-                <a className="link">
+                <Link className="link" to={"/performance-list/"+this.props.refId+"/"+this.props.eventRefId}>
                    { Math.round((this.props.data['Proficient']*100)/this.props.total) + '% ' }
                    { this.props.data['Proficient']} {(this.props.data['Proficient'] == 1) ? 'student': 'students'} 
-                </a>
+                </Link>
               )}
             </p>
           </li>
@@ -77,10 +67,10 @@ export class Breakdown extends React.Component {
               { (this.props.data['Basic'] < 1) ? (
                 '0% - ' + this.props.data['Basic'] + ' student'
               ) : (
-                <a className="link">
+                <Link className="link" to={"/performance-list/"+this.props.refId+"/"+this.props.eventRefId}>                
                   { Math.round((this.props.data['Basic']*100)/this.props.total) + '% '}
                   { this.props.data['Basic']} {(this.props.data['Basic'] == 1) ? 'student': 'students'} 
-                </a>
+                </Link>
               )}
             </p>
           </li>
@@ -90,10 +80,10 @@ export class Breakdown extends React.Component {
               { (this.props.data['Below Basic'] < 1) ? (
                 '0% - ' + this.props.data['Below Basic'] + ' student'
               ) : (
-                <a className="link">
+                <Link className="link" to={"/performance-list/"+this.props.refId+"/"+this.props.eventRefId}>
                   { Math.round((this.props.data['Below Basic']*100)/this.props.total) + '% '}
                   { this.props.data['Below Basic']} {(this.props.data['Below Basic'] == 1) ? 'student': 'students'} 
-                </a>
+                </Link>
               )}
             </p>
           </li>
@@ -103,10 +93,10 @@ export class Breakdown extends React.Component {
               { (this.props.data['Far Below Basic'] < 1) ? (
                 '0% - ' + this.props.data['Far Below Basic'] + ' student'
               ) : (
-                <a className="link">
+                <Link className="link" to={"/performance-list/"+this.props.refId+"/"+this.props.eventRefId}>
                   { Math.round((this.props.data['Far Below Basic']*100)/this.props.total) + '% - '}
                   { this.props.data['Far Below Basic']} {(this.props.data['Far Below Basic'] == 1) ? 'student': 'students'} 
-                </a>
+                </Link>
               )}
             </p>
           </li>

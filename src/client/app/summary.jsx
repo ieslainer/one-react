@@ -14,16 +14,16 @@ export class Summary extends React.Component {
   }
   
   componentWillMount(){
-    console.log("componentWillMount");
+//    console.log("componentWillMount");
   }
   
   componentDidMount(){
-    console.log("componentDidMount");
+//    console.log("componentDidMount");
   }
   
   componentWillReceiveProps(newProps) {
-    console.log("componentWillReceiveProps");
-    console.log("need update view :" + (this.state.refId != newProps.refId));
+//    console.log("componentWillReceiveProps");
+//    console.log("need update view :" + (this.state.refId != newProps.refId));
     if(this.state.refId != newProps.refId){
       this.setState({refId: newProps.refId});
       this.updateData(newProps.refId);
@@ -31,14 +31,14 @@ export class Summary extends React.Component {
   }
   
   shouldComponentUpdate(nextProps, nextState){
-    console.log("shouldComponentUpdate");
+//    console.log("shouldComponentUpdate");
 //    console.log("nextProps", nextProps);
 //    console.log("nextState", nextState);
     return true;
   }
   
   componentWillUpdate(nextProps, nextState){
-    console.log("componentWillUpdate");
+//    console.log("componentWillUpdate");
 //    console.log("nextProps", nextProps);
 //    console.log("nextState", nextState);
     if(nextProps.refId != nextState.refId){
@@ -49,11 +49,11 @@ export class Summary extends React.Component {
   
   
   componentDidUpdate(){
-    console.log("componentDidUpdate");
+//    console.log("componentDidUpdate");
   }
 
   updateData(refId){
-    console.log("updateData ("+refId+")");
+//    console.log("updateData ("+refId+")");
     
     fetch('http://localhost:3000/graphql', {
       method: 'POST',
@@ -70,7 +70,7 @@ export class Summary extends React.Component {
         return response.json()
     })
     .then((response) => {
-      console.log("res: ", response);
+//      console.log("res: ", response);
       let { headerInformation } = response; 
       let header = _.get(response, 'data.header') || _.get(response, 'data.summary');
       if(header){
