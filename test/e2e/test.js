@@ -23,5 +23,7 @@ describe('WebdriverIO POC', function(){
     expect(tableCaptions[2].getText()).toEqual('Schools')
     expect(tableCaptions[3].getText()).toEqual('Percent Correct')
     expect(tableCaptions[4].getText()).toEqual('Points Correct')
+    browser.pause(4000) 
+
   });
 });

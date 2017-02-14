@@ -30,7 +30,7 @@ export class PerformanceList extends React.Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        query: '{\n students(eventRefId:"e6053c0d-0100-483c-afba-67b21d2e01a4") {\n   given_name\n   family_name\n  student_personal_refid\n  class_name\n  school_name\n total_points\n  total_proficiency_score\n   total_points_correct\n }\n}'
+        query: '{\n students(eventRefId:"'+eventRefId+'") {\n   given_name\n   family_name\n  student_personal_refid\n  class_name\n  school_name\n total_points\n  total_proficiency_score\n   total_points_correct\n }\n}'
       })
     })  
     .then((response) => {
