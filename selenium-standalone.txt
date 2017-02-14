@@ -1,41 +1,41 @@
-14:01:48.252 INFO - Selenium build info: version: '3.0.1', revision: '1969d75'
-14:01:48.252 INFO - Launching a standalone Selenium Server
-2017-02-14 14:01:48.267:INFO::main: Logging initialized @199ms
-14:01:48.320 INFO - Driver class not found: com.opera.core.systems.OperaDriver
-14:01:48.320 INFO - Driver provider com.opera.core.systems.OperaDriver registration is skipped:
+15:31:15.496 INFO - Selenium build info: version: '3.0.1', revision: '1969d75'
+15:31:15.496 INFO - Launching a standalone Selenium Server
+2017-02-14 15:31:15.512:INFO::main: Logging initialized @201ms
+15:31:15.561 INFO - Driver class not found: com.opera.core.systems.OperaDriver
+15:31:15.561 INFO - Driver provider com.opera.core.systems.OperaDriver registration is skipped:
 Unable to create new instances on this machine.
-14:01:48.320 INFO - Driver class not found: com.opera.core.systems.OperaDriver
-14:01:48.320 INFO - Driver provider com.opera.core.systems.OperaDriver is not registered
-14:01:48.320 INFO - Driver provider org.openqa.selenium.safari.SafariDriver registration is skipped:
+15:31:15.561 INFO - Driver class not found: com.opera.core.systems.OperaDriver
+15:31:15.562 INFO - Driver provider com.opera.core.systems.OperaDriver is not registered
+15:31:15.567 INFO - Driver provider org.openqa.selenium.safari.SafariDriver registration is skipped:
  registration capabilities Capabilities [{browserName=safari, version=, platform=MAC}] does not match the current platform WIN8_1
-2017-02-14 14:01:48.351:INFO:osjs.Server:main: jetty-9.2.15.v20160210
-2017-02-14 14:01:48.383:INFO:osjsh.ContextHandler:main: Started o.s.j.s.ServletContextHandler@5dfcfece{/,null,AVAILABLE}
-2017-02-14 14:01:48.505:INFO:osjs.ServerConnector:main: Started ServerConnector@523884b2{HTTP/1.1}{0.0.0.0:4444}
-2017-02-14 14:01:48.505:INFO:osjs.Server:main: Started @426ms
-14:01:48.505 INFO - Selenium Server is up and running
-14:01:48.677 INFO - SessionCleaner initialized with insideBrowserTimeout 0 and clientGoneTimeout 1800000 polling every 180000
-14:01:49.819 INFO - Executing: [new session: Capabilities [{rotatable=true, specs=[./test/e2e/test.js], locationContextEnabled=true, loggingPrefs=org.openqa.selenium.logging.LoggingPreferences@2f3a3aea, browserName=chrome, javascriptEnabled=true, handlesAlerts=true, requestOrigins={name=webdriverio, version=4.5.0, url=http://webdriver.io}}]])
-14:01:49.834 INFO - Creating a new session for Capabilities [{rotatable=true, specs=[./test/e2e/test.js], locationContextEnabled=true, loggingPrefs=org.openqa.selenium.logging.LoggingPreferences@2f3a3aea, browserName=chrome, javascriptEnabled=true, handlesAlerts=true, requestOrigins={name=webdriverio, version=4.5.0, url=http://webdriver.io}}]
-Starting ChromeDriver 2.27.440174 (e97a722caafc2d3a8b807ee115bfb307f7d2cfd9) on port 48558
+2017-02-14 15:31:15.596:INFO:osjs.Server:main: jetty-9.2.15.v20160210
+2017-02-14 15:31:15.623:INFO:osjsh.ContextHandler:main: Started o.s.j.s.ServletContextHandler@5dfcfece{/,null,AVAILABLE}
+2017-02-14 15:31:15.738:INFO:osjs.ServerConnector:main: Started ServerConnector@7dce8836{HTTP/1.1}{0.0.0.0:4444}
+2017-02-14 15:31:15.738:INFO:osjs.Server:main: Started @426ms
+15:31:15.738 INFO - Selenium Server is up and running
+15:31:15.903 INFO - SessionCleaner initialized with insideBrowserTimeout 0 and clientGoneTimeout 1800000 polling every 180000
+15:31:17.088 INFO - Executing: [new session: Capabilities [{rotatable=true, specs=[./test/e2e/test.js], locationContextEnabled=true, loggingPrefs=org.openqa.selenium.logging.LoggingPreferences@7d54b2d1, browserName=chrome, javascriptEnabled=true, handlesAlerts=true, requestOrigins={name=webdriverio, version=4.5.0, url=http://webdriver.io}}]])
+15:31:17.094 INFO - Creating a new session for Capabilities [{rotatable=true, specs=[./test/e2e/test.js], locationContextEnabled=true, loggingPrefs=org.openqa.selenium.logging.LoggingPreferences@7d54b2d1, browserName=chrome, javascriptEnabled=true, handlesAlerts=true, requestOrigins={name=webdriverio, version=4.5.0, url=http://webdriver.io}}]
+Starting ChromeDriver 2.27.440174 (e97a722caafc2d3a8b807ee115bfb307f7d2cfd9) on port 28424
 Only local connections are allowed.
-14:01:50.644 INFO - Attempting bi-dialect session, assuming Postel's Law holds true on the remote end
-14:01:52.039 INFO - Detected dialect: OSS
-14:01:52.055 INFO - Done: [new session: Capabilities [{rotatable=true, specs=[./test/e2e/test.js], locationContextEnabled=true, loggingPrefs=org.openqa.selenium.logging.LoggingPreferences@2f3a3aea, browserName=chrome, javascriptEnabled=true, handlesAlerts=true, requestOrigins={name=webdriverio, version=4.5.0, url=http://webdriver.io}}]]
-14:01:52.102 INFO - Executing: [get: http://local.one.react.com:9696/])
-14:01:52.117 INFO - Executing: [find element: By.cssSelector: #app > div > div.form-group > select > option:nth-child(5)])
-14:01:53.305 INFO - Done: [get: http://local.one.react.com:9696/]
-14:01:53.315 INFO - Executing: [find element: By.cssSelector: #app > div > div.form-group > select])
-14:01:53.644 WARN - Exception thrown
+15:31:17.897 INFO - Attempting bi-dialect session, assuming Postel's Law holds true on the remote end
+15:31:19.273 INFO - Detected dialect: OSS
+15:31:19.285 INFO - Done: [new session: Capabilities [{rotatable=true, specs=[./test/e2e/test.js], locationContextEnabled=true, loggingPrefs=org.openqa.selenium.logging.LoggingPreferences@7d54b2d1, browserName=chrome, javascriptEnabled=true, handlesAlerts=true, requestOrigins={name=webdriverio, version=4.5.0, url=http://webdriver.io}}]]
+15:31:19.345 INFO - Executing: [get: http://local.one.react.com:9696/])
+15:31:19.346 INFO - Executing: [find element: By.cssSelector: #app > div > div.form-group > select > option:nth-child(5)])
+15:31:20.514 INFO - Done: [get: http://local.one.react.com:9696/]
+15:31:20.529 INFO - Executing: [find element: By.cssSelector: #app > div > div.form-group > select])
+15:31:20.852 WARN - Exception thrown
 org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {"method":"css selector","selector":"#app > div > div.form-group > select > option:nth-child(5)"}
   (Session info: chrome=56.0.2924.87)
   (Driver info: chromedriver=2.27.440174 (e97a722caafc2d3a8b807ee115bfb307f7d2cfd9),platform=Windows NT 6.3.9600 x86_64) (WARNING: The server did not provide any stacktrace information)
-Command duration or timeout: 34 milliseconds
+Command duration or timeout: 39 milliseconds
 For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
 Build info: version: '3.0.1', revision: '1969d75', time: '2016-10-18 09:48:19 -0700'
 System info: host: 'ct-kasper', ip: '172.17.98.191', os.name: 'Windows 8.1', os.arch: 'amd64', os.version: '6.3', java.version: '1.8.0_121'
 Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.27.440174 (e97a722caafc2d3a8b807ee115bfb307f7d2cfd9), userDataDir=C:\Users\ldejan.HSL\AppData\Local\Temp\scoped_dir10392_3403}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=56.0.2924.87, platform=WIN8_1, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=true, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, unexpectedAlertBehaviour=}]
-Session ID: 2e632d187edb37c81bb3778dafa62288
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.27.440174 (e97a722caafc2d3a8b807ee115bfb307f7d2cfd9), userDataDir=C:\Users\ldejan.HSL\AppData\Local\Temp\scoped_dir7456_1314}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=56.0.2924.87, platform=WIN8_1, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=true, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, unexpectedAlertBehaviour=}]
+Session ID: ddc6eae177d892ffbee09be042c9a52d
 *** Element info: {Using=css selector, value=#app > div > div.form-group > select > option:nth-child(5)}
 	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
 	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source)
@@ -62,34 +62,102 @@ Session ID: 2e632d187edb37c81bb3778dafa62288
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
 	at java.lang.Thread.run(Unknown Source)
-14:01:53.646 WARN - Exception: no such element: Unable to locate element: {"method":"css selector","selector":"#app > div > div.form-group > select > option:nth-child(5)"}
+15:31:20.854 WARN - Exception: no such element: Unable to locate element: {"method":"css selector","selector":"#app > div > div.form-group > select > option:nth-child(5)"}
   (Session info: chrome=56.0.2924.87)
   (Driver info: chromedriver=2.27.440174 (e97a722caafc2d3a8b807ee115bfb307f7d2cfd9),platform=Windows NT 6.3.9600 x86_64) (WARNING: The server did not provide any stacktrace information)
-Command duration or timeout: 34 milliseconds
+Command duration or timeout: 39 milliseconds
 For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
 Build info: version: '3.0.1', revision: '1969d75', time: '2016-10-18 09:48:19 -0700'
 System info: host: 'ct-kasper', ip: '172.17.98.191', os.name: 'Windows 8.1', os.arch: 'amd64', os.version: '6.3', java.version: '1.8.0_121'
 Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.27.440174 (e97a722caafc2d3a8b807ee115bfb307f7d2cfd9), userDataDir=C:\Users\ldejan.HSL\AppData\Local\Temp\scoped_dir10392_3403}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=56.0.2924.87, platform=WIN8_1, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=true, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, unexpectedAlertBehaviour=}]
-Session ID: 2e632d187edb37c81bb3778dafa62288
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.27.440174 (e97a722caafc2d3a8b807ee115bfb307f7d2cfd9), userDataDir=C:\Users\ldejan.HSL\AppData\Local\Temp\scoped_dir7456_1314}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=56.0.2924.87, platform=WIN8_1, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=true, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, unexpectedAlertBehaviour=}]
+Session ID: ddc6eae177d892ffbee09be042c9a52d
 *** Element info: {Using=css selector, value=#app > div > div.form-group > select > option:nth-child(5)}
-14:01:53.670 INFO - Done: [find element: By.cssSelector: #app > div > div.form-group > select]
-14:01:53.694 INFO - Executing: [click: 0 [[ChromeDriver: chrome on WIN8_1 (2e632d187edb37c81bb3778dafa62288)] -> css selector: #app > div > div.form-group > select]])
-14:01:53.694 INFO - Executing: [find elements: By.cssSelector: #app > div > div.form-group > select > option:nth-child(5)])
-14:01:53.763 INFO - Done: [click: 0 [[ChromeDriver: chrome on WIN8_1 (2e632d187edb37c81bb3778dafa62288)] -> css selector: #app > div > div.form-group > select]]
-14:01:53.790 INFO - Done: [find elements: By.cssSelector: #app > div > div.form-group > select > option:nth-child(5)]
-14:01:54.178 INFO - Executing: [find elements: By.cssSelector: #app > div > div.form-group > select > option:nth-child(5)])
-14:01:54.178 INFO - Done: [find elements: By.cssSelector: #app > div > div.form-group > select > option:nth-child(5)]
-14:01:54.676 INFO - Executing: [find elements: By.cssSelector: #app > div > div.form-group > select > option:nth-child(5)])
-14:01:54.704 INFO - Done: [find elements: By.cssSelector: #app > div > div.form-group > select > option:nth-child(5)]
-14:01:54.719 INFO - Executing: [is enabled: 1 [[ChromeDriver: chrome on WIN8_1 (2e632d187edb37c81bb3778dafa62288)] -> css selector: #app > div > div.form-group > select > option:nth-child(5)]])
-14:01:54.735 INFO - Done: [is enabled: 1 [[ChromeDriver: chrome on WIN8_1 (2e632d187edb37c81bb3778dafa62288)] -> css selector: #app > div > div.form-group > select > option:nth-child(5)]]
-14:01:54.751 INFO - Executing: [find element: By.cssSelector: #app > div > div.form-group > select > option:nth-child(5)])
-14:01:54.760 INFO - Done: [find element: By.cssSelector: #app > div > div.form-group > select > option:nth-child(5)]
-14:01:54.770 INFO - Executing: [click: 1 [[ChromeDriver: chrome on WIN8_1 (2e632d187edb37c81bb3778dafa62288)] -> css selector: #app > div > div.form-group > select > option:nth-child(5)]])
-14:01:54.895 INFO - Done: [click: 1 [[ChromeDriver: chrome on WIN8_1 (2e632d187edb37c81bb3778dafa62288)] -> css selector: #app > div > div.form-group > select > option:nth-child(5)]]
-14:01:54.917 INFO - Executing: [find elements: By.cssSelector: .summary-container .performance])
-14:01:54.933 INFO - Done: [find elements: By.cssSelector: .summary-container .performance]
-14:01:55.028 INFO - Executing: [delete session: 9f5c99e2-b597-445f-aee3-037dc6475fb8])
-14:01:55.422 INFO - Executing: [find elements: By.cssSelector: .summary-container .performance])
-14:01:55.828 INFO - Done: [delete session: 9f5c99e2-b597-445f-aee3-037dc6475fb8]
+15:31:20.882 INFO - Done: [find element: By.cssSelector: #app > div > div.form-group > select]
+15:31:20.895 INFO - Executing: [click: 0 [[ChromeDriver: chrome on WIN8_1 (ddc6eae177d892ffbee09be042c9a52d)] -> css selector: #app > div > div.form-group > select]])
+15:31:20.895 INFO - Executing: [find elements: By.cssSelector: #app > div > div.form-group > select > option:nth-child(5)])
+15:31:20.958 INFO - Done: [click: 0 [[ChromeDriver: chrome on WIN8_1 (ddc6eae177d892ffbee09be042c9a52d)] -> css selector: #app > div > div.form-group > select]]
+15:31:20.986 INFO - Done: [find elements: By.cssSelector: #app > div > div.form-group > select > option:nth-child(5)]
+15:31:21.392 INFO - Executing: [find elements: By.cssSelector: #app > div > div.form-group > select > option:nth-child(5)])
+15:31:21.402 INFO - Done: [find elements: By.cssSelector: #app > div > div.form-group > select > option:nth-child(5)]
+15:31:21.409 INFO - Executing: [is enabled: 1 [[ChromeDriver: chrome on WIN8_1 (ddc6eae177d892ffbee09be042c9a52d)] -> css selector: #app > div > div.form-group > select > option:nth-child(5)]])
+15:31:21.424 INFO - Done: [is enabled: 1 [[ChromeDriver: chrome on WIN8_1 (ddc6eae177d892ffbee09be042c9a52d)] -> css selector: #app > div > div.form-group > select > option:nth-child(5)]]
+15:31:21.434 INFO - Executing: [find element: By.cssSelector: #app > div > div.form-group > select > option:nth-child(5)])
+15:31:21.443 INFO - Done: [find element: By.cssSelector: #app > div > div.form-group > select > option:nth-child(5)]
+15:31:21.450 INFO - Executing: [click: 1 [[ChromeDriver: chrome on WIN8_1 (ddc6eae177d892ffbee09be042c9a52d)] -> css selector: #app > div > div.form-group > select > option:nth-child(5)]])
+15:31:21.494 INFO - Done: [click: 1 [[ChromeDriver: chrome on WIN8_1 (ddc6eae177d892ffbee09be042c9a52d)] -> css selector: #app > div > div.form-group > select > option:nth-child(5)]]
+15:31:21.519 INFO - Executing: [find element: By.cssSelector: .summary-container.performance])
+15:31:21.753 WARN - Exception thrown
+org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {"method":"css selector","selector":".summary-container.performance"}
+  (Session info: chrome=56.0.2924.87)
+  (Driver info: chromedriver=2.27.440174 (e97a722caafc2d3a8b807ee115bfb307f7d2cfd9),platform=Windows NT 6.3.9600 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 20 milliseconds
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: '3.0.1', revision: '1969d75', time: '2016-10-18 09:48:19 -0700'
+System info: host: 'ct-kasper', ip: '172.17.98.191', os.name: 'Windows 8.1', os.arch: 'amd64', os.version: '6.3', java.version: '1.8.0_121'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.27.440174 (e97a722caafc2d3a8b807ee115bfb307f7d2cfd9), userDataDir=C:\Users\ldejan.HSL\AppData\Local\Temp\scoped_dir7456_1314}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=56.0.2924.87, platform=WIN8_1, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=true, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, unexpectedAlertBehaviour=}]
+Session ID: ddc6eae177d892ffbee09be042c9a52d
+*** Element info: {Using=css selector, value=.summary-container.performance}
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(Unknown Source)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(Unknown Source)
+	at java.lang.reflect.Constructor.newInstance(Unknown Source)
+	at org.openqa.selenium.remote.ErrorHandler.createThrowable(ErrorHandler.java:216)
+	at org.openqa.selenium.remote.ErrorHandler.throwIfResponseFailed(ErrorHandler.java:168)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:635)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:368)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElementByCssSelector(RemoteWebDriver.java:465)
+	at org.openqa.selenium.By$ByCssSelector.findElement(By.java:430)
+	at org.openqa.selenium.remote.RemoteWebDriver.findElement(RemoteWebDriver.java:360)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.openqa.selenium.support.events.EventFiringWebDriver$2.invoke(EventFiringWebDriver.java:103)
+	at com.sun.proxy.$Proxy4.findElement(Unknown Source)
+	at org.openqa.selenium.support.events.EventFiringWebDriver.findElement(EventFiringWebDriver.java:187)
+	at org.openqa.selenium.remote.server.handler.FindElement.call(FindElement.java:48)
+	at org.openqa.selenium.remote.server.handler.FindElement.call(FindElement.java:33)
+	at java.util.concurrent.FutureTask.run(Unknown Source)
+	at org.openqa.selenium.remote.server.DefaultSession$1.run(DefaultSession.java:176)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(Unknown Source)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(Unknown Source)
+	at java.lang.Thread.run(Unknown Source)
+15:31:21.754 WARN - Exception: no such element: Unable to locate element: {"method":"css selector","selector":".summary-container.performance"}
+  (Session info: chrome=56.0.2924.87)
+  (Driver info: chromedriver=2.27.440174 (e97a722caafc2d3a8b807ee115bfb307f7d2cfd9),platform=Windows NT 6.3.9600 x86_64) (WARNING: The server did not provide any stacktrace information)
+Command duration or timeout: 20 milliseconds
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/no_such_element.html
+Build info: version: '3.0.1', revision: '1969d75', time: '2016-10-18 09:48:19 -0700'
+System info: host: 'ct-kasper', ip: '172.17.98.191', os.name: 'Windows 8.1', os.arch: 'amd64', os.version: '6.3', java.version: '1.8.0_121'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities [{applicationCacheEnabled=false, rotatable=false, mobileEmulationEnabled=false, networkConnectionEnabled=false, chrome={chromedriverVersion=2.27.440174 (e97a722caafc2d3a8b807ee115bfb307f7d2cfd9), userDataDir=C:\Users\ldejan.HSL\AppData\Local\Temp\scoped_dir7456_1314}, takesHeapSnapshot=true, pageLoadStrategy=normal, databaseEnabled=false, handlesAlerts=true, hasTouchScreen=false, version=56.0.2924.87, platform=WIN8_1, browserConnectionEnabled=false, nativeEvents=true, acceptSslCerts=true, locationContextEnabled=true, webStorageEnabled=true, browserName=chrome, takesScreenshot=true, javascriptEnabled=true, cssSelectorsEnabled=true, unexpectedAlertBehaviour=}]
+Session ID: ddc6eae177d892ffbee09be042c9a52d
+*** Element info: {Using=css selector, value=.summary-container.performance}
+15:31:21.778 INFO - Executing: [find elements: By.cssSelector: .summary-container.performance])
+15:31:21.799 INFO - Done: [find elements: By.cssSelector: .summary-container.performance]
+15:31:22.280 INFO - Executing: [find elements: By.cssSelector: .summary-container.performance])
+15:31:22.288 INFO - Done: [find elements: By.cssSelector: .summary-container.performance]
+15:31:22.778 INFO - Executing: [find elements: By.cssSelector: .summary-container.performance])
+15:31:22.788 INFO - Done: [find elements: By.cssSelector: .summary-container.performance]
+15:31:22.794 INFO - Executing: [is enabled: 2 [[ChromeDriver: chrome on WIN8_1 (ddc6eae177d892ffbee09be042c9a52d)] -> css selector: .summary-container.performance]])
+15:31:22.808 INFO - Done: [is enabled: 2 [[ChromeDriver: chrome on WIN8_1 (ddc6eae177d892ffbee09be042c9a52d)] -> css selector: .summary-container.performance]]
+15:31:22.818 INFO - Executing: [find element: By.cssSelector: ul > li.rs-performance-breakdown-item.rs-bands-list-item-1 > p.perf-count > a])
+15:31:22.838 INFO - Done: [find element: By.cssSelector: ul > li.rs-performance-breakdown-item.rs-bands-list-item-1 > p.perf-count > a]
+15:31:22.846 INFO - Executing: [click: 3 [[ChromeDriver: chrome on WIN8_1 (ddc6eae177d892ffbee09be042c9a52d)] -> css selector: ul > li.rs-performance-breakdown-item.rs-bands-list-item-1 > p.perf-count > a]])
+15:31:22.925 INFO - Done: [click: 3 [[ChromeDriver: chrome on WIN8_1 (ddc6eae177d892ffbee09be042c9a52d)] -> css selector: ul > li.rs-performance-breakdown-item.rs-bands-list-item-1 > p.perf-count > a]]
+15:31:22.937 INFO - Executing: [find elements: By.cssSelector: #app > div > div > form > div > div > table > thead > tr > th])
+15:31:22.960 INFO - Done: [find elements: By.cssSelector: #app > div > div > form > div > div > table > thead > tr > th]
+15:31:22.973 INFO - Executing: [get text: 4 [[ChromeDriver: chrome on WIN8_1 (ddc6eae177d892ffbee09be042c9a52d)] -> css selector: #app > div > div > form > div > div > table > thead > tr > th]])
+15:31:22.996 INFO - Done: [get text: 4 [[ChromeDriver: chrome on WIN8_1 (ddc6eae177d892ffbee09be042c9a52d)] -> css selector: #app > div > div > form > div > div > table > thead > tr > th]]
+15:31:23.010 INFO - Executing: [get text: 5 [[ChromeDriver: chrome on WIN8_1 (ddc6eae177d892ffbee09be042c9a52d)] -> css selector: #app > div > div > form > div > div > table > thead > tr > th]])
+15:31:23.033 INFO - Done: [get text: 5 [[ChromeDriver: chrome on WIN8_1 (ddc6eae177d892ffbee09be042c9a52d)] -> css selector: #app > div > div > form > div > div > table > thead > tr > th]]
+15:31:23.040 INFO - Executing: [get text: 6 [[ChromeDriver: chrome on WIN8_1 (ddc6eae177d892ffbee09be042c9a52d)] -> css selector: #app > div > div > form > div > div > table > thead > tr > th]])
+15:31:23.064 INFO - Done: [get text: 6 [[ChromeDriver: chrome on WIN8_1 (ddc6eae177d892ffbee09be042c9a52d)] -> css selector: #app > div > div > form > div > div > table > thead > tr > th]]
+15:31:23.072 INFO - Executing: [get text: 7 [[ChromeDriver: chrome on WIN8_1 (ddc6eae177d892ffbee09be042c9a52d)] -> css selector: #app > div > div > form > div > div > table > thead > tr > th]])
+15:31:23.095 INFO - Done: [get text: 7 [[ChromeDriver: chrome on WIN8_1 (ddc6eae177d892ffbee09be042c9a52d)] -> css selector: #app > div > div > form > div > div > table > thead > tr > th]]
+15:31:23.102 INFO - Executing: [get text: 8 [[ChromeDriver: chrome on WIN8_1 (ddc6eae177d892ffbee09be042c9a52d)] -> css selector: #app > div > div > form > div > div > table > thead > tr > th]])
+15:31:23.124 INFO - Done: [get text: 8 [[ChromeDriver: chrome on WIN8_1 (ddc6eae177d892ffbee09be042c9a52d)] -> css selector: #app > div > div > form > div > div > table > thead > tr > th]]
+15:31:23.235 INFO - Executing: [delete session: 750b34d5-8673-40d6-8a32-8dd9cb150115])
+15:31:24.017 INFO - Done: [delete session: 750b34d5-8673-40d6-8a32-8dd9cb150115]
