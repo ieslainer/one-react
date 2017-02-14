@@ -1080,3 +1080,16 @@ button[class^="btn"]:hover, input.btnPrimary[type="button"]:hover {
     margin-left: -5px;
     margin-right: -5px;
 }
+
+.label-select{
+  color: #4c4e50;
+  font-size: 22px;
+  height: 30px;
+  padding: 0;
+  margin-left: 18px;
+  font-weight: bold;
+}
+
+.container-home{
+  padding-top: 30px;
+}
