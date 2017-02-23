@@ -1,5 +1,5 @@
 describe('WebdriverIO POC', function(){
-  const browserUrl = browser.url('http://local.one.react.com:9696/');
+  const browserUrl = browser.url('http://local.one.react.com:9696/')
   let dropDown = '#app > div > div.form-group > select'
   let oneOfAssignments = '#app > div > div.form-group > select > option:nth-child(5)'
   let performanceCard = '.summary-container.performance'
@@ -48,4 +48,5 @@ describe('WebdriverIO POC', function(){
     $(performanceCard).waitForEnabled(5000)
     browser.pause(500)
   })
+  
 });

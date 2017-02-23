@@ -92,7 +92,7 @@ export class Select extends React.Component {
     console.log("[Select] render");
     return (
       <div className="form-group">
-        <label htmlFor="select2" >Assignments: {this.state.defaultId}</label>
+        <label htmlFor="select2" className="label-select" >Assignments</label>
         <select value={this.state.defaultId} onChange={this.onChange.bind(this)} className="form-control">
           {this.state.options.map(option => {
             return <option value={option.resource_id} key={option.activity_id} >{option.assignment_name}</option>

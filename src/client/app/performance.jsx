@@ -102,8 +102,8 @@ export class Performance extends React.Component {
       
       if(performance){
         var totalStudent = 0;
-        _.reduce(performance.bandSummaries, function(result, band){
-          return totalStudent += band.uniqueStudents;
+        _.each(performance.bandSummaries, function(band){
+          return totalStudent = totalStudent + band.uniqueStudents;
         });
         
         var dataPie = { pie: [], leyend: {} };

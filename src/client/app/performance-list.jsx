@@ -30,7 +30,7 @@ export class PerformanceList extends React.Component {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        query: '{\n students(eventRefId:"e6053c0d-0100-483c-afba-67b21d2e01a4") {\n   given_name\n   family_name\n   class_name\n  school_name\n   total_proficiency_score\n   total_points_correct\n }\n}'
+        query: '{\n students(eventRefId:"'+eventRefId+'") {\n   given_name\n   family_name\n  student_personal_refid\n  class_name\n  school_name\n total_points\n  total_proficiency_score\n   total_points_correct\n }\n}'
       })
     })  
     .then((response) => {
@@ -48,6 +48,30 @@ export class PerformanceList extends React.Component {
   
   render () {
 //    console.log("[PerformanceList] render");
+
+    let listStudent = this.state.students.map(function(student){
+      let percentage = (student.total_points_correct < 1) ? 0 : ( (student.total_points_correct * 100) / student.total_points);
+      return (
+        <tr>
+          <td>
+            <div className="cell-content">{student.given_name}, {student.family_name}<div className="studentId">{student.student_personal_refid}</div></div>
+          </td>
+          <td>
+            <div className="cell-content">{student.class_name}</div>
+          </td>
+          <td>
+            <div className="cell-content">{student.school_name}</div>
+          </td>
+          <td>
+            <div className="cell-content">{percentage}%</div>
+          </td>
+          <td>
+            <div className="cell-content">{student.total_points_correct}/{student.total_points}</div>
+          </td>
+        </tr>
+      )
+    });
+
     return (            
       <div className="students-list">
         <div>
@@ -55,7 +79,7 @@ export class PerformanceList extends React.Component {
             <Link to={"/summary/"+this.state.assignmentRefId}>
               <button className="btnPrimary-C-Sml-Rect" data-icon="<<"></button>
             </Link>   
-            <p className="lozenge">Students : <strong>4</strong></p>
+            <p className="lozenge">Students : <strong>{this.state.students.length}</strong></p>
           </div>
           <form role="form" name="" onsubmit="return false" novalidate="">
             <div className="rs-bands-formasal listTable list-d3-override">
@@ -98,74 +122,7 @@ export class PerformanceList extends React.Component {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>
-                        <div className="cell-content">Bale, Bruce<div className="studentId">5a2fcd0b1a49428da11e53fbeb2db412</div></div>
-                      </td>
-                      <td>
-                        <div className="cell-content">e2e_test_class_1407</div>
-                      </td>
-                      <td>
-                        <div className="cell-content">School C</div>
-                      </td>
-                      <td>
-                        <div className="cell-content">100%</div>
-                      </td>
-                      <td>
-                        <div className="cell-content">20/20</div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div className="cell-content">Potter, Harry<div className="studentId">eeead7efee884592859edfae075c3180</div></div>
-                      </td>
-                      <td>
-                        <div className="cell-content">e2e_test_class1</div>
-                      </td>
-                      <td>
-                        <div className="cell-content">School C</div>
-                      </td>
-                      <td>
-                        <div className="cell-content">85%</div>
-                      </td>
-                      <td>
-                        <div className="cell-content">17/20</div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div className="cell-content">Tyler, Elizabeth<div className="studentId">69f49f1e85ad4856b5f1b47cadb18bf3</div></div>
-                      </td>
-                      <td>
-                        <div className="cell-content">e2e_test_class_1407</div>
-                      </td>
-                      <td>
-                        <div className="cell-content">School C</div>
-                      </td>
-                      <td>
-                        <div className="cell-content">85%</div>
-                      </td>
-                      <td>
-                        <div className="cell-content">17/20</div>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>
-                        <div className="cell-content">Wayne, Bruce<div className="studentId">e5e79f88e2774d4cb4860d2948bc9605</div></div>
-                      </td>
-                      <td>
-                        <div className="cell-content">e2e_test_class1</div>
-                      </td>
-                      <td>
-                        <div className="cell-content">School C</div>
-                      </td>
-                      <td>
-                        <div className="cell-content">100%</div>
-                      </td>
-                      <td>
-                        <div className="cell-content">20/20</div>
-                      </td>
-                    </tr>
+                    {listStudent}
                   </tbody>
                 </table>
               </div>          
